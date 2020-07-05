@@ -6,6 +6,11 @@ const homecontroller=require("../controllers/home_controller");
 
 router.get("/",homecontroller.home);
 
+router.get("/contact",homecontroller.contact);
+
+router.use("/users",require("./users"));
+
+router.use("/post",require("./post"));
 
 console.log("route is loaded");
 
