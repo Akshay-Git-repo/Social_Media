@@ -3,7 +3,7 @@
 const mongoose=require("mongoose");
 
 // connect to the database
-mongoose.connect('mongodb://localhost/todo_list_db');
+mongoose.connect('mongodb://localhost/codeial_development');
 
 //Acquire the connection (to check if it is successful)
 const db=mongoose.connection;
@@ -17,7 +17,7 @@ db.once('open', function()
     console.log("Successfully connected to the DataBase")
 })
 
-
+module.exports=db;
 
 
 

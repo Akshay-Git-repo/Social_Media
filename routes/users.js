@@ -4,6 +4,16 @@ const router=express.Router();
 
 const user_controller=require("../controllers/users_controller");
 
+//Route to signIn function in user_controller
+router.get("/sign-in",user_controller.signIn);
+
+//Route to signUp function in user_controller
+router.get("/sign-up",user_controller.signUp);
+
+router.post("/create",user_controller.create);
+
+
+//this is just for practise
 router.get("/profile",user_controller.profile);
 
 router.get("/about",user_controller.about);

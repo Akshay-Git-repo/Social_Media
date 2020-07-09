@@ -2,6 +2,14 @@ const express=require("express");
 const app=express();
 const port=8000;
 
+const db=require("./config/mongoose");
+const cookieParser=require("cookie-parser");
+
+//middleware
+
+app.use(express.urlencoded());
+app.use(cookieParser());
+
 
 
 //use express layouts
@@ -19,6 +27,8 @@ app.use('/', require('./routes'));
 app.set('view engine','ejs');
 app.set('views','./views');
 
+
+//static file location
 app.use(express.static("./assets"));
 
 
@@ -26,6 +36,7 @@ app.use(express.static("./assets"));
 
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
+
 
 app.listen(port,function(err)
 {
