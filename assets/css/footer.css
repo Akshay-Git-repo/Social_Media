@@ -1,3 +1,7 @@
+footer {
+  width: 98.9vw;
+  position: fixed; }
+
 #footer-layout {
   display: flex;
   flex-direction: row;

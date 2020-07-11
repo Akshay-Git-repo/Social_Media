@@ -1,14 +1,36 @@
+<link rel="stylesheet" href="/css/home.css">
 
-<h1>Home Page</h1>
+<h1><%=locals.title%></h1>
 
 
 <section id="feed-posts">
 
-    <h4><Posts<h4>
-        <form action="" id="new-post-feed" method="POST">
+    <h4>Posts<h4>
+        <form action="/post/create" id="new-post-feed" method="POST">
 
-            <textarea name="content" rows="3" cols="30"></textarea>
+            <textarea name="content" rows="3" cols="30" placeholder="Type Here.."></textarea>
             <input type="submit" value="Post">
 
         </form>
-</section>
+
+            
+            <ul id="all-posts" style="list-style-type:none;">
+                <% Posts.forEach(function(posted_data) { %>
+                    <div id="posted_content">
+                        <li><%= posted_data.content %> </li>
+                    </div>
+                    <div id="post_created_time">
+                        <li><%= posted_data.createdAt %></li>
+                    </div>
+                    <div id="posted_by">
+                        <li>Created By: <%= locals.User%> </li>
+                    </div>
+                <% }); %>
+                
+
+            </ul>
+            
+    </section>
+
+
+

@@ -93,7 +93,7 @@ return res.redirect("/");
 
 }
 
-//logout controller
+//logout
 module.exports.destroySession=function(req,res)
 {
 
