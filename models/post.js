@@ -13,6 +13,15 @@ const postSchema=new mongoose.Schema
         type:mongoose.Schema.Types.ObjectId,
        
         ref:"User"
+    },
+
+    //include the array of id's of commnets in this schema itself
+
+    comments:
+    {
+        type:mongoose.Schema.Types.ObjectId,
+       
+        ref:"Comment"
     }
  },  
     {
