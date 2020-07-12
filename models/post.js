@@ -17,12 +17,12 @@ const postSchema=new mongoose.Schema
 
     //include the array of id's of commnets in this schema itself
 
-    comments:
+    comments:[
     {
         type:mongoose.Schema.Types.ObjectId,
        
         ref:"Comment"
-    }
+    }]
  },  
     {
         timestamps:true

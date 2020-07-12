@@ -22,3 +22,14 @@ body {
   font-weight: lighter;
   font-family: sans-serif;
   font-size: 12; }
+
+.post-comments-list li {
+  width: 50vw;
+  height: 34px;
+  background-color: #efe0ff;
+  margin-bottom: 2px;
+  border-radius: 2%; }
+  .post-comments-list li small {
+    font-family: sans-serif;
+    font-size: x-small;
+    margin-left: 41vw; }

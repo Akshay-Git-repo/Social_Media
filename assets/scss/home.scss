@@ -37,3 +37,21 @@ margin-bottom:10vh;
     font-family: sans-serif;
     font-size: min($numbers: 12);
 }
+
+.post-comments-list
+{
+    li{
+    width:50vw;
+    height: 34px;
+    background-color: hsl(269, 100%, 94%);
+    margin-bottom: 2px;
+    border-radius: 2%;
+    small
+        {
+            font-family: sans-serif;
+            font-size: x-small;
+            margin-left: 41vw;
+        }
+    }
+    
+}
