@@ -1,0 +1,72 @@
+<% Posts.forEach(function(posted_data) { %>
+    <div id="posted_content">
+
+        <li><%= posted_data.content %> </li>
+        <!-- to check whether  user is logged in and then user who did the post and logged in the user are same or not? -->
+      <p>  <% if((locals.user) && (posted_data.user.id==locals.user.id)){%> 
+        <small>
+            <a href="/post/destroy/<%=posted_data.id%>" style="margin-left: 70vw;">Delete</a>
+        </small>
+        <%}%>
+    </p>
+    </div>
+    <div id="post_created_time">
+        <li><%= posted_data.createdAt %></li>
+    </div>
+    <div id="posted_by">
+        <li>Created By: <%= posted_data.user.name%> </li>
+    </div>
+
+   
+    <div class="post-comment">
+        <%if(locals.user){ %>
+
+            <form action="/comments/create" method="POST">
+                <input type="text" name="content" placeholder="Type here to add Comment">
+                <input type="hidden" name="post" value="<%=posted_data._id%>">
+                <input type="submit" value="Add Comment">
+            </form>
+
+
+        <%}%>
+
+        <!-- <button onclick="myFunction()">Comments</button> -->
+        <div class="post-comments-list">
+            <ul id="post-comments-<%=posted_data._id%>" style="list-style-type:none;">
+                <% for (comment of posted_data.comments){%>
+                <div class="comment-container" style="margin-left:-25vw;">
+                    <li >
+                    
+                        <%=comment.content%>
+                        
+                        <br>
+                        <small><%=comment.user.name%></small>
+                    
+                   
+                    </li>
+
+                    <p>  <% if((locals.user) && (comment.user.id==locals.user.id)||(locals.user.id==posted_data.user.id)){%> 
+                        <small style="margin-left: -20vw;">
+                            <a href="/comments/destroy/<%=comment.id%>">Delete</a>
+                        </small>
+                        <%}%>
+                    </p>
+                </div>
+                    <%}%>
+                    
+                   
+                     
+                      
+        
+            </ul>
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <% }); %>

@@ -37,3 +37,33 @@ module.exports.create= function(req,res)
 
 
 }
+
+
+//for deleting the comment
+
+module.exports.destroy=function(req,res)
+{
+   Comment.findById(req.params.id,function(err,comment)
+   {
+
+    if(err)
+    {
+      console.log("Error while deleting comment");
+    }
+    
+     if(comment.user==req.user.id)
+     {
+
+      //storing post id bcz we want delete the comment id from the post collection where all comments id's are present
+       let postid=comment.post;
+       comment.remove();
+       Post.findByIdAndUpdate(postid,{$pull:{comments:req.params.id}},function(err,post)
+       {
+          return res.redirect("back");
+       })
+     }
+     else{
+       return res.redirect("back");
+     }
+   });
+};
