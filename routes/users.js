@@ -27,7 +27,11 @@ router.get("/sign-out",user_controller.destroySession);
 
 
 //this is just for practise
-router.get("/profile",passport.checkAuthentication,user_controller.profile);
+router.get("/profile/:id",passport.checkAuthentication,user_controller.profile);
+
+router.post("/update/:id",passport.checkAuthentication,user_controller.update);
+
+
 
 router.get("/about",user_controller.about);
 

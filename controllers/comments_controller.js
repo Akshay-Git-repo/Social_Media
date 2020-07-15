@@ -28,7 +28,7 @@ module.exports.create= function(req,res)
 
             post.comments.push(comment);
             post.save();
-
+            req.flash("success","Comment Added Successfully!")
              res.redirect("/");
 
         })
@@ -48,7 +48,8 @@ module.exports.destroy=function(req,res)
 
     if(err)
     {
-      console.log("Error while deleting comment");
+      //console.log("Error while deleting comment");
+      req.flash("error",err);
     }
     
      if(comment.user==req.user.id)
@@ -59,6 +60,7 @@ module.exports.destroy=function(req,res)
        comment.remove();
        Post.findByIdAndUpdate(postid,{$pull:{comments:req.params.id}},function(err,post)
        {
+        req.flash("success","Comment Deleted Successfully!")
           return res.redirect("back");
        })
      }

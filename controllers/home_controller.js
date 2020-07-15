@@ -1,59 +1,77 @@
 const Post=require("../models/post");
 
-module.exports.home=function(req,res)
+const User=require("../models/user");
+module.exports.home=async function(req,res)
 {
 
+//this is without Async wait
+    // if(req.isAuthenticated())
+    // {    
+    //     //populate the user of each post
 
-    if(req.isAuthenticated())
-    {    
+    //     Post.find({})
+    //     .populate("user")
+    //     .populate({path:'comments',
+    //      populate:{path:'user'}})
+    //     .exec(function(err,posts)
+    //     {
+    //         User.find({},function(err,users)
+    //         {
 
-        // Post.find({user:req.user._id},function(err,posts)
-        // {
-        //     if(err)
-        //     {
-        //         console.log("Error while finding the Post");
-        //     }
-        //     else
-        //     {
-        //         console.log(req.cookies);
-        //         // res.cookie('user_id','aaa');
-        //         return res.render('home',
-        //         {
-        //             Posts:posts,
-        //             title:'Codeial | Home Page',
-        //             User:req.user.name
+    //             return res.render('home',
+    //             {
+    //                   Posts:posts,
+    //                   title:'Codeial | Home Page',
+    //                   User:req.user.name,
+    //                   all_users:users
+ 
+    //               });
 
-        //         })
-        //     }
-        // });
-
-
-
-
-
-        //populate the user of each post
-
-        Post.find({}).populate("user").populate({path:'comments',populate:{path:'user'}}).exec(function(err,posts)
-        {
-            console.log("hi");
+    //         });
 
             
-            return res.render('home',
-                   {
-                         Posts:posts,
-                         title:'Codeial | Home Page',
-                         User:req.user.name
-    
-                     });
-        });
-    }
-else
+         
+    //     });
+    // }
+
+    //with Async Wait
+try
 {
-    return res.render('user_sign_in',
-    {
-        title:"Codeial | Sign In"
-    })
+    if(req.isAuthenticated())
+    {    
+        //populate the user of each post
+
+        let posts=await Post.find({})
+        .populate("user")
+        .populate({path:'comments',
+         populate:{path:'user'}});
+        
+        let users =await User.find({});
+
+        return res.render('home',
+        {
+            Posts:posts,
+            title:'Codeial | Home Page',
+            User:req.user.name,
+            all_users:users
+    
+        });
+
+
+    }
+    else
+        {
+            return res.render('user_sign_in',
+            {
+                title:"Codeial | Sign In"
+            })
+        }
+
+} catch(err)
+{
+    console.log("Error",err);
 }
+
 }
 
 

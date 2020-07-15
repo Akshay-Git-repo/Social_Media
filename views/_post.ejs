@@ -34,9 +34,9 @@
         <div class="post-comments-list">
             <ul id="post-comments-<%=posted_data._id%>" style="list-style-type:none;">
                 <% for (comment of posted_data.comments){%>
-                <div class="comment-container" style="margin-left:-25vw;">
+                <div class="comment-container" style="margin-left:-19vw;">
                     <li >
-                    
+                                                                                                                                                                                                                                                                                                                                                                                                
                         <%=comment.content%>
                         
                         <br>
@@ -46,7 +46,7 @@
                     </li>
 
                     <p>  <% if((locals.user) && (comment.user.id==locals.user.id)||(locals.user.id==posted_data.user.id)){%> 
-                        <small style="margin-left: -20vw;">
+                        <small style="margin-left: -10vw;">
                             <a href="/comments/destroy/<%=comment.id%>">Delete</a>
                         </small>
                         <%}%>

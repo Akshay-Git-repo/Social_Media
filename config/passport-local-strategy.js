@@ -9,20 +9,24 @@ passport.use(new LocalStrategy(
 
     {
 
-        usernameField:'email'
-    },function(email,password,done)
+        usernameField:'email',
+        passReqToCallback:true
+        
+    },function(req,email,password,done)
     {
     //find the user in mongodb
         User.findOne({email:email},function(err,user)
         {
             if(err)
             {
-            console.log("Error in finding the User---> Passport");
+           // console.log("Error in finding the User---> Passport");
+           req.flash("error",err);//use of flash
             return done(err);  //report an error to passport
             }
             if(!user||user.password!=password)
             {
-                console.log("Invalid Usernam/Password");
+               // console.log("Invalid Usernam/Password");
+               req.flash("error","Invalid Username/Password");//use of flash
                 return done(null,false); //null means no error and false means authentiction is not yet done
             }
             return done(null,user);//return null means no error and pass the user as authentication done
@@ -78,7 +82,7 @@ passport.setAuthenticatedUser=function(req,res,next)
     if(req.isAuthenticated())
     {
         //req.user containns the current signrd in user data from session cookie  and we are sendig it to locals for the views
-
+        console.log("User set in passport local strategy");
         res.locals.user=req.user;
     }
 
