@@ -95,7 +95,6 @@ app.use(passport.session());
 
 
 app.use(passport.setAuthenticatedUser);
-
 //flash uses session cookies so place it after session cookies set
 
 app.use(flash());

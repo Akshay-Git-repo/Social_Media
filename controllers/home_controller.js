@@ -40,8 +40,9 @@ try
     if(req.isAuthenticated())
     {    
         //populate the user of each post
-
+        console.log("inside the home controller");
         let posts=await Post.find({})
+        .sort("-createdAt")
         .populate("user")
         .populate({path:'comments',
          populate:{path:'user'}});

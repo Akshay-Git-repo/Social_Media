@@ -1,12 +1,13 @@
 footer {
   width: 98.9vw;
-  position: fixed; }
+  position: fixed;
+  top: 90vh; }
 
 #footer-layout {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 0px;
+  margin-top: 20px;
   background-color: #B0E0E6;
   font-family: unset; }
   #footer-layout #footer-nav {

@@ -1,61 +1,43 @@
 body{
     background-color: lightsteelblue;
+    
 }
 
 
-#home_container
-{
+// #home_container
+// {
+//     display: flex;
+//     flex-direction: row;
+//    justify-content: space-between;
+// // width: 85vw;
+// }
+
+#home-container{
     display: flex;
-    flex-direction: row;
-   justify-content: space-between;
-//    width: 85vw;
-}
-
-#user-friends
-{
-    width: 30vw;
-    padding-left: 10px;
-    margin-top: -80px;
-    border: 1px solid lightgrey;
-}
-#all-posts
-{
-margin-left:-30px;
-margin-bottom:10vh;
-#posted_content
-{
-    margin-top: 10px;
-    width: 68%;
-    height: 10vh;
-    background-color: lightgray;
     
-}
-
-#posted_by
-{
-    margin-left: 40vw;
-    font-weight: lighter;
-    font-family: sans-serif;
-    font-size: min($numbers: 12);
-}
-   li
-   {
-       margin-left: 3px;
-   }
     
+    #feed-posts{
 
+       
+        width: 70%;
+        padding: 10px;
+        margin-bottom: 10vh;
+    }
+
+    #user-friends{
+        width: 30%;
+        padding: 10px;
+        border-left: 1px solid lightgrey;
+        height: 100%;
+    }
 }
 
-#post_created_time
+#post-comments-list
 {
-    margin-left: 40vw;
-    font-weight: lighter;
-    font-family: sans-serif;
-    font-size: min($numbers: 12);
-}
-
-.post-comments-list
-{
+    margin-bottom: 1vh;
+    ul{
+        list-style-type:none;
+    
     li{
     
     width:34vw;
@@ -71,14 +53,45 @@ margin-bottom:10vh;
             margin-left: 25vw;
         }
     }
+}
     
 }
 
-
-.comment-container
+#post_created_time
 {
+    margin-left: 40vw;
+    font-weight: lighter;
+    font-family: sans-serif;
+    font-size: min($numbers: 12);
+}
+
+#comment-content
+{
+    width:34vw;
+    height: 34px;
+    background-color: hsl(269, 100%, 94%);
+    margin-bottom: 2px;
+    border-radius: 2%;
    
-    display: flex;
-    flex-direction: row;
-   justify-content: space-evenly;
+}
+
+
+#posts-list-container 
+{
+    li{
+        #post-content{
+    width: 68%;
+    height: auto;
+    background-color: lightgray;
+    small{
+        margin-left: 35vw;
+    }
+    }
+    #comment-content a
+    {
+      margin-left: 10vw;
+
+    }
+}
+
 }
