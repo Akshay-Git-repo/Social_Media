@@ -1,5 +1,6 @@
 const User=require("../models/user");
-
+const fs=require("fs");
+const path=require('path');
 
 
 module.exports.profile=function(req,res)
@@ -108,15 +109,61 @@ module.exports.destroySession=function(req,res)
 
 //to update the logged in user info
 
-module.exports.update=function(req,res)
+module.exports.update=async function(req,res)
 {
-    if(req.user.id==req.params.id)
-    {
-        User.findByIdAndUpdate(req.params.id,req.body,function(err,user)
-        {
-            return res.redirect("back");
-        });
+    // if(req.user.id==req.params.id)
+    // {
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err,user)
+    //     {
+    //         return res.redirect("back");
+    //     });
+    // }
+    // else
+    // {
+    //     return res.status(401).send("Unauthorized");
+    // }
+
+    //above code is commented bcz we are converting the code to async await
+
+    if(req.user.id==req.params.id){
+        try{
+               let user=await User.findById(req.params.id);
+        //reason why we are npt using req.body bcz our req is multipart now ,and multipart will not have body property so here multer comes into picture 
+        //as it having req and res i.e., uploadedAvatar(req,res,function(err)
+               User.uploadedAvatar(req,res,function(err)
+               {
+                   if(err){console.log("*********Multer Error")};
+                       console.log(req.file);
+                   user.name=req.body.name;
+                   user.email=req.body.email;
+
+
+                   if(req.file) //not every time user is uploading the file so this will execute nly if req is having file
+                   {
+
+                       if(user.avatar && fs.existsSync(path.join(__dirname,'..', user.avatar)) )//first check whether user.avatar means in db whether path is present
+                       //and second check is whether file is present at that path if both condition mathc then nly delete the file from /upload/users/avatars
+                       {
+                        fs.unlinkSync(path.join(__dirname,'..', user.avatar));
+                       
+                       }
+                       user.avatar=User.avatarPath+'/'+req.file.filename;
+                    
+                   }
+                   user.save();
+                   return res.redirect("back");
+               })
+
+        }catch(err){
+              
+            req.flash("error",err);
+            return;
+
+        }
+
+
     }
+
     else
     {
         return res.status(401).send("Unauthorized");

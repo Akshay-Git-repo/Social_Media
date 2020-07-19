@@ -81,7 +81,7 @@ passport.setAuthenticatedUser=function(req,res,next)
 
     if(req.isAuthenticated())
     {
-        //req.user containns the current signrd in user data from session cookie  and we are sendig it to locals for the views
+        //req.user contains the current signrd in user data from session cookie  and we are sendig it to locals for the views
         console.log("User set in passport local strategy");
         res.locals.user=req.user;
     }

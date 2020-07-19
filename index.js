@@ -62,6 +62,9 @@ app.set('layout extractScripts',true);
 app.set('view engine','ejs');
 app.set('views','./views');
 
+//make the upload folder available to browser
+
+app.use('/uploads/',express.static(__dirname+'/uploads'));
 
 //middleware for session
 

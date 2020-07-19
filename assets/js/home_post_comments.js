@@ -73,7 +73,7 @@ class PostComments{
 
                 </li>`);
     }
-
+ 
 
     deleteComment(deleteLink){
         $(deleteLink).click(function(e){
