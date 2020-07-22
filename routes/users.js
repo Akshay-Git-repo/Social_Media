@@ -22,17 +22,37 @@ router.post("/createsession",passport.authenticate(
 
 ),user_controller.createSession);
 
+//passport google authentication
+router.get("/auth/google/",passport.authenticate('google',{scope:['profile','email']}));
+router.get("/auth/google/callback",passport.authenticate(
+
+    'google',
+    {failureRedirect:'/users/sign-in'},
+
+),user_controller.createSession);
+
+//passport facebook authentication
+
+//router.get("/auth/facebook/",passport.authenticate('facebook',{scope:['profile','user_likes']}));
+router.get("/auth/facebook/",passport.authenticate('facebook'));
+router.get("/auth/facebook/callback",passport.authenticate(
+
+    'facebook',
+    {failureRedirect:'/users/sign-in'},
+
+),user_controller.createSession);
+
 
 router.get("/sign-out",user_controller.destroySession);
 
 
-//this is just for practise
+
 router.get("/profile/:id",passport.checkAuthentication,user_controller.profile);
 
 router.post("/update/:id",passport.checkAuthentication,user_controller.update);
 
 
-
+//this is just for practise
 router.get("/about",user_controller.about);
 
 console.log("route is loaded");

@@ -1,12 +1,25 @@
 
 <h2>User Sign Up </h2>
 
-<form action="/users/create" method="POST">
+<form action="/users/create" method="POST" style="margin-left: 3px;">
     
     <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Enter your Email" required>
+    <input type="email" name="email" placeholder="Enter your Email" required><br><br>
     <input type="password" name="password" placeholder="Password" required>
-    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-    <input type="submit" value="Sign Up">
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required><br><br>
+    <input class="btn btn-primary" type="submit" value="Sign Up">
 
 </form>
+
+<p>
+
+  <!-- <a href="/users/auth/google"> Google Sign In/ Sign Up</a> -->
+
+  <a href="/users/auth/google" style="margin-left: 10px;">
+      <button type="button" class="btn btn-gplus"><i class="fab fa-google-plus-g pr-1"></i> Log in with Google</button>
+  </a>
+
+  
+  <a href="/users/auth/facebook" style="margin-left: 3px;">
+  <button type="button" class="btn btn-fb"><i class="fab fa-facebook pr-1"></i> Log in with Facebook</button>
+  </a>

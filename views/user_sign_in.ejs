@@ -1,11 +1,46 @@
 
+<div id="sign-in-container">
 
-<h2>User Sign In </h2>
-
-<form action="/users/createsession" method="POST">
     
-    <input type="email" name="email" placeholder="Enter your Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input class="btn btn-primary" type="submit" value="Sign In">
+    <div>
+        <h2>User Sign In </h2>
 
-</form>
+        <form action="/users/createsession" method="POST" style="margin-left: 3px;">
+            
+            <input type="email" name="email" placeholder="Enter your Email" required>
+            <input type="password" name="password" placeholder="Password" required><br><br>
+            <input class="btn btn-primary" type="submit" value="Sign In">
+
+        </form>
+
+        <p>
+
+            <!-- <a href="/users/auth/google"> Google Sign In/ Sign Up</a> -->
+
+            <a href="/users/auth/google" style="margin-left: 10px;">
+                <button type="button" class="btn btn-gplus" style="color:#b23121;"><i class="fab fa-google-plus-g pr-1" style="color:#b23121;"></i> Log in with Google</button>
+            </a>
+
+            
+            <a href="/users/auth/facebook" style="margin-left: 3px;">
+            <button type="button" class="btn btn-fb"><i class="fab fa-facebook pr-1" style="color: blue;"></i> Log in with Facebook</button>
+            </a>
+        </p>
+    </div>
+
+    <div id="sign-in-right-container" style="height: 50vh; list-style-type:none;">
+
+
+        <h4 style="font-family: sans-serif;font-weight: bolder; color: mediumblue;"> We create community wherever we go!!</h4>
+        <div id="sign-in-background">
+
+        </div>
+
+        
+
+    </div>
+
+</div>
+
+
+
