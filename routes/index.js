@@ -16,6 +16,8 @@ router.use("/api",require("./api"));
 
 router.use("/comments",require("./comments"));
 
+
+router.use("/likes",require("./like"));
 console.log("route is loaded");
 
 module.exports=router;

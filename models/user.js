@@ -25,7 +25,16 @@ const userSchema=new mongoose.Schema
     {
         type:String,
 
-    }
+    },
+
+    friendships:[
+
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Friendship'
+
+        }
+    ]
 
 
 },

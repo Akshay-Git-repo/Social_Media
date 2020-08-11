@@ -14,10 +14,26 @@
         <input type="submit"  value="Update">
     </form>
     
+
+   
+
+
+
 <%}else{%>    
     <!-- else show only the profile info -->
     <p><%= profile_user.name %></p>
     <p><%= profile_user.email %></p>
+    <% if(status){%>
+      <a class="btn btn-danger" href="/users/removefriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); removeFriend(this.id)" style="margin-left: 10vw;">
+        Remove Friend
+        </a>
+    
+
+    <%}else{%>
+      <a class="btn btn-primary" href="/users/addfriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); addFriend(this.id)" style="margin-left: 10vw;">
+        Add Friend
+        </a>
+    <%}%>
 <%} %>
 
 
@@ -41,4 +57,68 @@ $("#imgInp").change(function() {
     
   readURL(this);
 });
+</script>
+
+
+
+<script>
+  function addFriend(clicked)
+{
+
+  console.log($(`#${clicked}`));
+
+              // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+            $.ajax({
+                type: 'GET',
+                url: $(`#${clicked}`).attr('href'),
+                
+            })
+            .done(function(data) {
+               
+               $(`#${clicked}`).html(`Remove Friend`);
+
+               $(`#${clicked}`).attr('href',"/users/removefriend/<%= profile_user.id %>/<%=user.id%>");
+               $(`#${clicked}`).attr('onclick',"event.preventDefault(); removeFriend(this.id)");
+               $(`#${clicked}`).addClass("btn btn-danger");
+
+              console.log("success")
+
+            })
+            .fail(function(errData) {
+                console.log('error in completing the request',errData);
+            });
+            
+
+      }
+
+
+      function removeFriend(clicked)
+{
+
+  console.log($(`#${clicked}`));
+
+              // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+            $.ajax({
+                type: 'GET',
+                url: $(`#${clicked}`).attr('href'),
+                
+            })
+            .done(function(data) {
+               
+               $(`#${clicked}`).html(`Add Friend`);
+
+               $(`#${clicked}`).attr('href',"/users/addfriend/<%= profile_user.id %>/<%=user.id%>");
+               $(`#${clicked}`).attr('onclick',"event.preventDefault(); addFriend(this.id)");
+               $(`#${clicked}`).removeClass("btn btn-danger");
+               $(`#${clicked}`).addClass("btn btn-primary");
+
+              console.log("success")
+
+            })
+            .fail(function(errData) {
+                console.log('error in completing the request',errData);
+            });
+            
+
+      }
 </script>

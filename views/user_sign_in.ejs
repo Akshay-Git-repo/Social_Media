@@ -1,5 +1,5 @@
 
-<div id="sign-in-container">
+<div id="sign-in-container" style="margin-left: 20px;" >
 
     
     <div>
@@ -7,7 +7,7 @@
 
         <form action="/users/createsession" method="POST" style="margin-left: 3px;">
             
-            <input type="email" name="email" placeholder="Enter your Email" required>
+            <input type="email" name="email" placeholder="Enter your Email" required><br><br>
             <input type="password" name="password" placeholder="Password" required><br><br>
             <input class="btn btn-primary" type="submit" value="Sign In">
 
@@ -17,7 +17,7 @@
 
             <!-- <a href="/users/auth/google"> Google Sign In/ Sign Up</a> -->
 
-            <a href="/users/auth/google" style="margin-left: 10px;">
+            <a href="/users/auth/google" >
                 <button type="button" class="btn btn-gplus" style="color:#b23121;"><i class="fab fa-google-plus-g pr-1" style="color:#b23121;"></i> Log in with Google</button>
             </a>
 
@@ -26,6 +26,7 @@
             <button type="button" class="btn btn-fb"><i class="fab fa-facebook pr-1" style="color: blue;"></i> Log in with Facebook</button>
             </a>
         </p>
+        <a href="/users/reset_password/" style="color: dimgray;text-decoration:none;">Forgot Password?</a> 
     </div>
 
     <div id="sign-in-right-container" style="height: 50vh; list-style-type:none;">

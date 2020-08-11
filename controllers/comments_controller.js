@@ -1,7 +1,10 @@
 const Post= require('../models/post');
 const Comment=require('../models/comment');
 const User=require('../models/user');
+const Like=require('../models/like');
 const commentsmailer=require("../mailers/comments_mailer");
+const commentEmailWorker=require('../workers/comment_email_worker');
+const queue=require('../config/kue');
 
 module.exports.create= async function(req,res)
 {
@@ -26,8 +29,19 @@ try{
         comment = await comment.populate('user', 'name email').execPopulate();
 
         //now send the mail 
-        commentsmailer.newComment(comment);
+       // commentsmailer.newComment(comment);
 
+      let job=queue.create('emails',comment).save(function(err)
+      {
+        if(err)
+        {
+          console.log('Error while creating the queue',err);
+          return;
+        }
+        console.log('job enqueued',job.id);
+      });
+
+      
        if(req.xhr)
        {
            
@@ -71,7 +85,9 @@ module.exports.destroy=async function(req,res)
     let postid=await comment.post;
     comment.remove();
     let post=await Post.findByIdAndUpdate(postid,{$pull:{comments:req.params.id}})
-    
+       // CHANGE :: destroy the associated likes for this comment
+       await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
  
 
 

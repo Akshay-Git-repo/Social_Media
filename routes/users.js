@@ -45,12 +45,20 @@ router.get("/auth/facebook/callback",passport.authenticate(
 
 router.get("/sign-out",user_controller.destroySession);
 
+router.get("/reset_password",user_controller.reset_password);
+router.get("/reset_password/:id",user_controller.reset_password_link);
+router.post("/reset_password_email",user_controller.reset_password_email);
+router.post("/reset_password_validation/:id",user_controller.reset_password_validation);
 
+ router.get("/profile/:id/:from_id",passport.checkAuthentication,user_controller.profile);
 
-router.get("/profile/:id",passport.checkAuthentication,user_controller.profile);
 
 router.post("/update/:id",passport.checkAuthentication,user_controller.update);
 
+
+router.get("/addfriend/:id/:from_id",user_controller.addfriend);
+//removefriend
+router.get("/removefriend/:id/:from_id",user_controller.removefriend);
 
 //this is just for practise
 router.get("/about",user_controller.about);

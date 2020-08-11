@@ -1,5 +1,5 @@
 const Post=require("../models/post");
-
+const Friendships=require("../models/friendship");
 const User=require("../models/user");
 module.exports.home=async function(req,res)
 {
@@ -45,17 +45,31 @@ try
         .sort("-createdAt")
         .populate("user")
         .populate({path:'comments',
-         populate:{path:'user'}});
+         populate:{path:'user'},
+        populate:{
+            path:'likes'
+        }
+        }).populate('likes');
         
         let users =await User.find({});
+        
+        let friendships=await User.findById(req.user._id).populate('friendships');
+        let friends=await Friendships.find({from_user:req.user._id}).populate("to_user");
+        let friends_requested=await Friendships.find({to_user:req.user._id}).populate("from_user");
+      // let friends=await Friendships.find({$or:[{from_user:req.user._id},{to_user:req.user._id}]}).populate("to_user").populate("from_user");
 
+
+       console.log(friends);
+      
         return res.render('home',
         {
             Posts:posts,
             title:'Codeial | Home Page',
             User:req.user.name,
-            all_users:users
-    
+            all_users:users,
+            friends:friends,
+            friends_requested:friends_requested,
+            friendships:friendships
         });
 
 

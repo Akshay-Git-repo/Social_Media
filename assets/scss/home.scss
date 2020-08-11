@@ -14,20 +14,20 @@ body{
 
 #home-container{
     display: flex;
+    justify-content: space-between;
     
     
     #feed-posts{
 
-       
         width: 70%;
         padding: 10px;
         margin-bottom: 10vh;
     }
 
     #user-friends{
-        width: 30%;
+        width: 13%;
         padding: 10px;
-        border-left: 1px solid lightgrey;
+        border-left: 3px solid lightgrey;
         height: 100%;
     }
 }
@@ -39,7 +39,7 @@ body{
         list-style-type:none;
     
     li{
-    
+  
     width:34vw;
     height: 34px;
     background-color: hsl(269, 100%, 94%);
@@ -67,11 +67,12 @@ body{
 
 #comment-content
 {
+    border:1px solid rgb(132, 135, 138);
     width:34vw;
     height: 34px;
     background-color: hsl(269, 100%, 94%);
     margin-bottom: 2px;
-    border-radius: 2%;
+    border-radius: 1%;
    
 }
 

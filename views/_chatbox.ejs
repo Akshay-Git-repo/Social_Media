@@ -1,0 +1,37 @@
+<!-- CHANGE :: Creat the code for chat box -->
+<% if (locals.user){ %>
+
+  <button class="open-button" onclick="openChatForm()" style="background-color: coral;">Common Chat Room</button>
+	<div id="user-chat-box">
+		<ul id="chat-messages-list">
+			<li class="other-message">
+				<span>Other Message</span>
+			</li>
+			<li class="self-message">
+				<span>
+					Self Message
+				</span>
+				
+			</li>
+
+		</ul>
+		<div id="chat-message-input-container">
+			<input id="chat-message-input" placeholder="Type message here">
+      <button id="send-message">Send</button><br><br>
+     
+        <button id="close-chatbox" onclick="closeChatForm()">close</button>  
+     
+		</div>
+    
+	</div>
+<% } %>
+
+<script>
+function openChatForm(){
+  document.getElementById("user-chat-box").style.display="block";
+}
+function closeChatForm(){
+  document.getElementById("user-chat-box").style.display="none";
+}
+</script>
+

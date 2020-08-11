@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/home.css">
+<button text="join room" class="btn btn-primary btn-block" style="background:yellowgreen ;;" onclick="a();"> Join Room</button>
 
 <div id="home-container">
     <section id="feed-posts">
@@ -21,12 +22,33 @@
             </div>
         </section>
         
-         
+        
         <section id="user-friends">
-            <h4>Friends</h4>
+
+            <section id="friends-list">
+
+                <h4>Friends</h4>
+                <% for(u of friends){%>
+                    <p>
+                <a ><%=u.to_user.name%></a>
+                
+                </p>
+                <% } %>
+                <% for(u of friends_requested){%>
+                    <p>
+                <a ><%=u.from_user.name%></a>
+               
+                </p>
+                <% } %>
+    
+    
+                
+             </section>
+            <h4>Users</h4>
             <% for(u of all_users){%>
                 <p>
-                    <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                    <!-- <a href="/users/profile/<%= u.id %>/<%=locals.user._id%>"><%= u.name %></a> -->
+                    <a href="/users/profile/<%= u.id %>/<%=locals.user._id%>"><%= u.name %></a>
                 </p>
             <% } %>
         </section>
@@ -34,4 +56,21 @@
 <!-- importing this script for creating the comments -->
 <script src="/js/home_post_comments.js" ></script>
 <script src="/js/home_posts.js"></script>
+<script src="/js/toggle_likes.js"></script>
 
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+
+<% if(locals.user){ %>
+<script>
+    function a(){
+    new ChatEngine("user-chat-box",'<%=locals.user.email%>','<%=locals.user.name%>');
+    }
+</script>
+<% } %>

@@ -37,9 +37,33 @@ let transporter = nodemailer.createTransport({
         return mailHTML;
   }
 
+//render template for the reset password mail
+
+let renderTemplateForResetPassword=(data,relativePath)=>
+  {
+    console.log('insidetemplateresetpass');
+
+    let mailHTML;
+    ejs.renderFile(
+        path.join(__dirname,'../views/mailers',relativePath),
+        data,
+        function(err,template)
+        {
+            if(err)
+            {
+                console.log("Error in rendering the template",err);
+                return;
+            }
+            mailHTML=template;
+        }
+    )
+        return mailHTML;
+  }
+
+
 
   module.exports={
     transporter:transporter,
-    renderTemplate:renderTemplate
-
+    renderTemplate:renderTemplate,
+    renderTemplateForResetPassword:renderTemplateForResetPassword
   };

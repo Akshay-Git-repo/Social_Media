@@ -3,7 +3,7 @@
       
         <%= post.content %>
         <br>
-        <small>
+        <small style="color: blue;font-weight:bolder;">
             <%= post.user.name %>
         </small>
 
@@ -16,6 +16,15 @@
             <small style="margin-left: 20vw;"  id="post_created_time">
                 <%= post.createdAt %>
             </small>
+          <!-- <a id="<%= post.id %>"  class="like-post-button" href="/likes/toggle/?id=<%=post.id %>&type=Post" <i class="fa fa-thumbs-o-up" aria-hidden="true" style="color: blue;"></i> <%=post.likes.length%> Likes</a> -->
+          <% if (locals.user){ %>
+            <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                    <%= post.likes.length %> Likes
+            </a>
+        <% }else{ %>
+            <%= post.likes.length %> Likes
+        <% } %>
+
     </p> 
     <div class="post-comments">
         <% if (locals.user){ %>
@@ -29,7 +38,7 @@
         <% } %>
 
         <div class="post-comments-list">
-            <ul id="post-comments-<%= post._id %>" style=" list-style-type:none;">
+            <ul id="post-comments-<%= post._id %>" style=" list-style-type:none; ">
                 <% for (comment of post.comments){%>
 
                     <%- include('_comment') -%>
@@ -41,3 +50,4 @@
     </div>
     
 </li>
+

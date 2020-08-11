@@ -12,7 +12,7 @@ class PostComments{
         this.newCommentForm = $(`#post-${postId}-comments-form`);
         console.log("inside post comment")
         this.createComment(postId);
-
+        
         let self = this;
         // call for all the existing comments
         $(' .delete-comment-button', this.postContainer).each(function(){
@@ -35,6 +35,9 @@ class PostComments{
                     let newComment = pSelf.newCommentDom(data.data.comment);
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
+                    //pSelf.likeComment($(' .like-comment-button', newComment));
+                     // CHANGE :: enable the functionality of the toggle like button on the new comment
+                     new ToggleLike($(' .toggle-like-button', newComment));
 
                     new Noty({
                         theme: 'relax',
@@ -58,17 +61,22 @@ class PostComments{
     newCommentDom(comment){
         // I've added a class 'delete-comment-button' to the delete comment link and also id to the comment's li
         return $(`<li id="comment-${ comment._id }">
-                        <p id="comment-content">
+                        <p id="comment-content" style="font-size: small;">
                             
                            
                             
                             ${comment.content}
-                            <br>
-                            <small style="margin-left: 10vw;">
+                            
+                            <small style="margin-left: 12vw;">
                                 ${comment.user.name}
-                           
+                                <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${comment._id}&type=Comment">
+                                0 Likes
+                            </a>
+
                             <a class="delete-comment-button" href="/comments/destroy/${comment._id}">Delete</a>
+                            
                         </small>
+                        
                         </p>    
 
                 </li>`);
@@ -100,4 +108,34 @@ class PostComments{
 
         });
     }
+
+
+    // method to like a comment
+    // likeComment = function(likeLink){
+    //     console.log('inside likepost',likeLink);
+    //       $(likeLink).click(function(e){
+    //           e.preventDefault();
+      
+    //           $.ajax({
+    //               type: 'get',
+    //               url: $(likeLink).prop('href'),
+    //               success: function(data){
+                      
+    //                  // $(`#post-${data.data.type_id}`).replaceWith(data.data.count,'Likes');
+    //               //    $(likeLink).innerHTML=`${data.data.count} Likes`;
+    //               $(`a#${data.data.type_id}.like-comment-button`).text(`${data.data.count} Likes`);
+                      
+                   
+                    
+    //               },error: function(error){
+    //                   console.log(error.responseText);
+    //               }
+    //           });
+      
+    //       });
+      
+      
+    //       }
+      
+
 }

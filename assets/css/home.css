@@ -2,15 +2,16 @@ body {
   background-color: lightsteelblue; }
 
 #home-container {
-  display: flex; }
+  display: flex;
+  justify-content: space-between; }
   #home-container #feed-posts {
     width: 70%;
     padding: 10px;
     margin-bottom: 10vh; }
   #home-container #user-friends {
-    width: 30%;
+    width: 13%;
     padding: 10px;
-    border-left: 1px solid lightgrey;
+    border-left: 3px solid lightgrey;
     height: 100%; }
 
 #post-comments-list {
@@ -35,11 +36,12 @@ body {
   font-size: 12; }
 
 #comment-content {
+  border: 1px solid #84878a;
   width: 34vw;
   height: 34px;
   background-color: #efe0ff;
   margin-bottom: 2px;
-  border-radius: 2%; }
+  border-radius: 1%; }
 
 #posts-list-container li #post-content {
   width: 68%;

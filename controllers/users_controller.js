@@ -1,22 +1,42 @@
 const User=require("../models/user");
+const Friendships=require("../models/friendship");
 const fs=require("fs");
 const path=require('path');
+const crypto=require('crypto');
+const ResetPassword=require('../models/reset_password'); 
+const resetPasswordMailer=require('../mailers/reset_password_mailer');
 
 
-module.exports.profile=function(req,res)
+module.exports.profile=async function(req,res)
 {
    
+    let status= false;
+    
 
+    
+    let user=await User.findById(req.params.id);
+    let user_friend_or_not=await Friendships.find({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
+    //let user_friend_or_not=await User.findById({_id:req.params.from_id}).populate({path:'friendships',match:{friendships:req.params.id}});
+    let friends=await Friendships.find({from_user:req.params.from_id});
+  console.log("user name",user);
+  console.log("inside the profile",friends);
+  console.log(user_friend_or_not);
+  if(user_friend_or_not!="")
+  {
+      status=true;
+  }
 
-    User.findById(req.params.id,function(err,user)
-    {
-        console.log(user);
+  console.log(status);
+
         return res.render('user',
         {
             title:"User Page",
-            profile_user:user
+            profile_user:user,
+            friends:friends,
+            status:status
+            
         });
-    });
+   
    
 }
 
@@ -171,6 +191,185 @@ module.exports.update=async function(req,res)
 }
 
 
+module.exports.reset_password=function(req,res)
+{
+       return res.render('user_email_for_reset_pass',
+    {
+        title:"Codeial | Reset Password"
+    })
+}
+
+//sending the reset password mail to user
+
+module.exports.reset_password_email= async function(req,res)
+{
+ try{
+   let user=await User.findOne({email:req.body.email});
+        //if req data is not present in the mongodb create the entry in the mongodb
+        if(!user)
+        {
+            req.flash("error","No User Found");
+            return res.redirect('back');
+            
+        }
+
+        //if req data is  present in the mongodb go back to the sign up page
+            if(user)
+            {
+                let resetpass_data=await ResetPassword.create({
+
+                    user:user.email,
+                    token:crypto.randomBytes(20).toString('hex'),
+                    isValid:true,
+                });
+                
+                
+                      let  resetPassword_data = await ResetPassword.findOne({user:req.body.email,isValid:true});
+                        
+                        req.flash("success",`User Found ,Email Sent to ${req.body.email}`);
+                        
+                        resetPasswordMailer.resetpassword(resetPassword_data);
+                        return res.redirect('back');
+                    
+                
+            }
+
+        }
+         catch(err)
+         {
+             req.flash('error',err);
+             return res.redirect('back');
+         }
+
+
+
+
+}
+
+module.exports.reset_password_link=async function(req,res)
+{
+    try{
+        console.log(req.params.id);
+       
+    let  resetPassword_token = await ResetPassword.findOne({token:req.params.id});
+    if(resetPassword_token)
+    {
+        console.log("inside reset the pass");
+        if(resetPassword_token.isValid==true)
+        return res.render('user_form_for_reset_pass',
+        {
+            title:"Codeial | Reset Password Form",
+            resetPassword_token:resetPassword_token
+            
+        })
+        else{
+            req.flash("error","Token Expired");
+            return res.redirect("back");
+        }  
+    }
+  }
+catch{
+    req.flash("error","Token is incorrect");
+}
+}
+
+module.exports.reset_password_validation=async function(req,res)
+{
+    if(req.body.password ==req.body.confirm_password)
+    {
+            
+            
+           
+            let user=await User.findOne({email:req.params.id});
+
+               if(user)
+               {
+                   user.password=req.body.password;
+                   user.save();
+               }
+                   let resetpass=await ResetPassword.findOne({user:req.params.id,isValid:true});
+                    if(resetpass)
+                    {
+                        resetpass.isValid=false;
+                        resetpass.save();
+
+                    }   
+                 
+                    req.flash("success","Password Updated Successfully") ;
+                    return res.redirect("/");
+               }
+
+
+        
+           
+    
+    else{
+        req.flash("error","Password and Confirm Password is not Matching")
+        res.redirect('back');
+    }
+}
+
+
+//add friend to user list
+
+module.exports.addfriend= async function(req,res)
+{
+    try{
+       
+        
+        
+        let to_user=await User.findById(req.params.id);
+        let from_user1=await User.findById(req.params.from_id);
+            
+       
+
+       let friends=await Friendships.create({
+          
+        from_user:req.params.from_id,
+        to_user:req.params.id,
+        
+        });
+        from_user1.friendships.push(friends);
+        to_user.friendships.push(friends);
+        from_user1.save();
+        to_user.save();
+
+        
+      
+    return res.redirect("back");
+
+     
+    }
+    catch(err)
+    {
+        req.flash("error","Error in adding the Friend to the friend list");
+    }
+}
+
+module.exports.removefriend=async function(req,res)
+{
+
+try{
+//find the id of the friendship from friendship collection
+   let id= await Friendships.find({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
+   await Friendships.deleteOne({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
+
+
+//delete the id from friendship array from bothe the user as they both are not friend with each other
+await User.findByIdAndUpdate(req.params.from_id,{$pull:{friendships:id[0]._id}});
+await User.findByIdAndUpdate(req.params.id,{$pull:{friendships:id[0]._id}});
+   
+  
+    return res.redirect("back");
+}
+catch(err)
+{
+
+console.log("Not able to delete the friend from friendlist ",err)
+
+    }
+
+}
 //JUST FOR PRACTICE 
 module.exports.about=function(req,res)
 {

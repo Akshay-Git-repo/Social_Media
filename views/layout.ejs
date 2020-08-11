@@ -4,6 +4,7 @@
 <title><%= locals.title %></title>
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/chat_box.css">
 <link rel="stylesheet" href="/css/footer.css">
 
 <!-- CDN for noty -->
@@ -20,7 +21,8 @@
       <link rel = "stylesheet" href = "/css_buttons/bootstrap-social.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
       <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  -->
-
+      <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%- style %>
 
 </head>
@@ -28,13 +30,14 @@
 <body>
     <%- include("_header");%>
     
-   
+    
+
 
 
     <main id="layout-main">
     <%- body %>
     </main>
-
+    <%- include("_chatbox");%>
     <%- include("_footer");%>
  
     <%- script %>
@@ -46,7 +49,7 @@
             text:"<%= flash.success %>",
             type:"success",
             layout:"topRight",
-            timeout:1500
+            timeout:5000
         }).show();
 
         <%}%>
@@ -60,7 +63,7 @@
             text:"<%= flash.error %>",
             type:"error",
             layout:"topRight",
-            timeout:1500
+            timeout:5000
         }).show();
 
         <%}%>

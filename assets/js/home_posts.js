@@ -1,6 +1,6 @@
 
  {   
-
+    console.log("HI I AM AKSHAY");
     // method to submit the form data for new post using AJAX
     let createPost = function(){
         let newPostForm = $('#new-post-form');
@@ -15,11 +15,15 @@
                     let newPost = newPostDom(data);
                    
                     console.log(newPost);
+                    
                     $('#posts-list-container>ul').prepend(newPost);
                     
                     deletePost($(' .delete-post-button', newPost));
+                    // likePost($(' .like-post-button', newPost));
                     // call the create comment class
                     new PostComments(data.data.post._id);
+                          // CHANGE :: enable the functionality of the toggle like button on the new post
+                          new ToggleLike($(' .toggle-like-button', newPost));
 
                     new Noty({
                         theme: 'relax',
@@ -40,6 +44,7 @@
     }
 
 
+
     // method to create a post in DOM
     let newPostDom = function(data){
         return $(`<li id="post-${data.data.post._id}">
@@ -48,7 +53,7 @@
                        
                         ${ data.data.post.content }
                         <br>
-                        <small>
+                        <small style="color: blue;font-weight:bolder;">
                         ${ data.data.user_info }
                         </small>
 
@@ -57,7 +62,10 @@
                             <a class="delete-post-button"  href="/post/destroy/${ data.data.post._id }">Delete</a>
                         </small>
                         <small style="margin-left: 20vw;  id="post_created_time"">${data.data.post.createdAt}</small>
-                        
+                        <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${data.data.post._id}&type=Post">
+                                    0 Likes
+                                </a>
+
                     </p>
                     <div class="post-comments">
                         
@@ -110,7 +118,37 @@
     });
 
 
-}
+    }
+
+
+     // method to like a post
+//  let likePost = function(likeLink){
+//   console.log('inside likepost',likeLink);
+//     $(likeLink).click(function(e){
+//         e.preventDefault();
+
+//         $.ajax({
+//             type: 'get',
+//             url: $(likeLink).prop('href'),
+//             success: function(data){
+                
+//                // $(`#post-${data.data.type_id}`).replaceWith(data.data.count,'Likes');
+//             //    $(likeLink).innerHTML=`${data.data.count} Likes`;
+//             $(`a#${data.data.type_id}.like-post-button`).text(`${data.data.count} Likes`);
+                
+             
+              
+//             },error: function(error){
+//                 console.log(error.responseText);
+//             }
+//         });
+
+//     });
+
+
+//     }
+
+
 
 
 
@@ -125,10 +163,10 @@ let convertPostsToAjax = function(){
         
         let deleteButton = $(' .delete-post-button', self);
         deletePost(deleteButton);
-
+        
         // get the post's id by splitting the id attribute
         let postId = self.prop('id').split("-")[1]
-        console.log(postId);
+       
         new PostComments(postId);
     });
 }
