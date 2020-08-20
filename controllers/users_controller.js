@@ -18,9 +18,7 @@ module.exports.profile=async function(req,res)
     let user_friend_or_not=await Friendships.find({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
     //let user_friend_or_not=await User.findById({_id:req.params.from_id}).populate({path:'friendships',match:{friendships:req.params.id}});
     let friends=await Friendships.find({from_user:req.params.from_id});
-  console.log("user name",user);
-  console.log("inside the profile",friends);
-  console.log(user_friend_or_not);
+
   if(user_friend_or_not!="")
   {
       status=true;

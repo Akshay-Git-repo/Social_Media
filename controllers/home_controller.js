@@ -59,7 +59,7 @@ try
       // let friends=await Friendships.find({$or:[{from_user:req.user._id},{to_user:req.user._id}]}).populate("to_user").populate("from_user");
 
 
-       console.log(friends);
+    //    console.log(friends);
       
         return res.render('home',
         {

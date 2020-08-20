@@ -1,14 +1,17 @@
 <link rel="stylesheet" href="/css/home.css">
-<button text="join room" class="btn btn-primary btn-block" style="background:yellowgreen ;;" onclick="a();"> Join Room</button>
+<button text="join room" class="btn btn-primary btn-block" style="background:yellowgreen;"onclick="b()"> Join Room</button>
 
 <div id="home-container">
     <section id="feed-posts">
             <h4>Posts</h4>
             <% if(locals.user){ %>
-            <form action="/post/create" id="new-post-form" method="POST">
-                <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required></textarea>
+            <form action="/post/create" id="new-post-form"  enctype="multipart/form-data" method="POST">
+                <textarea name="content" cols="30" rows="3" placeholder="Write to your Timeline..." required></textarea>
+                <input type="file" name="avatar" placeholder="Posted Picture"><br>
                 <input type="submit" value="Post">
             </form>
+
+           
             <% } %>
         
             <div id="posts-list-container">
@@ -17,7 +20,7 @@
                         
                     <%- include('_post') -%>
                         
-                    <%} %>
+                    <%} %> 
                 </ul>
             </div>
         </section>
@@ -27,16 +30,16 @@
 
             <section id="friends-list">
 
-                <h4>Friends</h4>
+                <h4 style="display: flex;flex-direction: column;">Friends</h4>
                 <% for(u of friends){%>
                     <p>
-                <a ><%=u.to_user.name%></a>
+                <a href="#" onclick='b("<%=u.to_user.email%>") ,openChatForm()' id="<%=u.to_user.email%>"><%=u.to_user.name%></a>
                 
                 </p>
                 <% } %>
                 <% for(u of friends_requested){%>
                     <p>
-                <a ><%=u.from_user.name%></a>
+                <a href="#" onclick='b("<%=u.from_user.email%>"),openChatForm()' id="<%=u.from_user.email%>"><%=u.from_user.name%></a>
                
                 </p>
                 <% } %>
@@ -69,8 +72,16 @@
 
 <% if(locals.user){ %>
 <script>
-    function a(){
-    new ChatEngine("user-chat-box",'<%=locals.user.email%>','<%=locals.user.name%>');
+    
+    function b(toUser){
+       
+    new ChatEngine("user-chat-box",'<%=locals.user.email%>','<%=locals.user.name%>',toUser);
     }
+    new ChatEngine("user-chat-box",'<%=locals.user.email%>','<%=locals.user.name%>');
+    
+    
+   
+       
+       
 </script>
 <% } %>

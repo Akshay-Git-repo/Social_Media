@@ -2,26 +2,60 @@ const Post=require("../models/post");
 const Comment=require("../models/comment");
 const User=require("../models/user");
 const Like=require("../models/like");
+const fs=require("fs");
+const path=require('path');
 module.exports.create=async function(req,res)
 {
     console.log("inside the post controller");
 
     try{
-    let post=await Post.create(                                                                                                            
-        {
-            
-        content:req.body.content,   
-        user:req.user._id,
-        });
-let user_name=await User.findById(post.user);
+    
 
-        if(req.xhr)
+        Post.uploadedAvatar(req,res,function(err)
         {
+            if(err){console.log("*********Multer Error")};
+                
+           
+                if(!req.file)
+                {
+               Post.create(                                                                                                            
+                    {     
+                    content:req.body.content,   
+                    user:req.user._id,
+                    });
+                }
+
+            if(req.file) //not every time user is uploading the file so this will execute nly if req is having file
+            {
+                
+               
+                Post.create(                                                                                                            
+                    {
+                    content:req.body.content,   
+                    user:req.user._id,
+                    avatar:Post.postavatarPath+'/'+req.file.filename
+                    });
+                
+             
+            }
+           
+            return res.redirect("back");
+        })
+
+        
+
+
+//let user_name=await User.findById(post.user);
+//console.log("user name is ",user_name)
+        if(req.xhr) 
+        {
+            console.log("insid the xhr request");
             post = await post.populate('user', 'name').execPopulate();
+            console.log("post data is",post)
             return res.status(200).json({
                 data:{
                     post:post,
-                    user_info:user_name.name,
+                    
                 },
                 message:"Post Created Successfully!",
                 
@@ -29,8 +63,8 @@ let user_name=await User.findById(post.user);
             
         }
 
-        req.flash("success","Post Created Successfully!");
-        return res.redirect("back");
+       // req.flash("success","Post Created Successfully!");
+        //return res.redirect("back");
     }
     catch(err)
     {
@@ -55,7 +89,7 @@ try{
         await Like.deleteMany({likeable: post, onModel: 'Post'});
         await Like.deleteMany({_id: {$in: post.comments}});
 
-
+        await fs.unlinkSync(path.join(__dirname,'..', post.avatar));
         post.remove();
         await Comment.deleteMany({post:req.params.id});
 

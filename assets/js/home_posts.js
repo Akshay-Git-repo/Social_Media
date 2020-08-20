@@ -1,9 +1,12 @@
 
+
  {   
-    console.log("HI I AM AKSHAY");
+    
     // method to submit the form data for new post using AJAX
     let createPost = function(){
+        
         let newPostForm = $('#new-post-form');
+        let data=new FormData(newPostForm);
         newPostForm.submit(function(e){
             e.preventDefault();
             $.ajax({
