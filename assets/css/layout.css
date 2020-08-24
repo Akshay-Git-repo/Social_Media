@@ -13,7 +13,7 @@ body {
 
 #sign-in-background {
   height: 75%;
-  background: url("../images/connecting-people-business-network.png") no-repeat;
+  background:url('../../public/assets/images/connecting_people_business_network-cac9f201ad.png') no-repeat;
   background-size: contain;
   border-radius: 2% 2% 5% 2%;
   opacity: 0.9; }

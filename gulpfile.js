@@ -5,6 +5,7 @@ const rev=require("gulp-rev");
 const uglify=require("gulp-uglify-es").default;
 const imagemin=require("gulp-imagemin");
 const del=require("del");
+const imageminMozjpeg=require("imagemin-mozjpeg");
 
 gulp.task('css',function(done){
 console.log("minifying css");
@@ -45,19 +46,18 @@ gulp.task('js',function(done){
 
 
     gulp.task('images',function(done){
-        console.log("minifying images...");
-        gulp.src("./assets/**/*.+(png|jpg|gif|svg|jpeg)")
-        .pipe(imagemin())
+        console.log("compressing images...");
+        gulp.src("./assets/**/*+(png|jpg|gif|svg|jpeg)").pipe(imagemin([imageminMozjpeg({quality:50})]))
         .pipe(rev())
         .pipe(gulp.dest("./public/assets"))
         .pipe(rev.manifest({
             cwd:'public',
-            merge:true
-        }))
-        .pipe(gulp.dest("./public/assets"));
+            merge:true,
+        })).pipe(gulp.dest("./public/assets"));
         
         done();
-        });
+        }
+        );
 
 
         //empty the public/assets directory

@@ -1,5 +1,6 @@
 const express=require("express");
 const app=express();
+
 const port=8000;
 const logger=require("morgan");
 const layouts=require("express-ejs-layouts");
@@ -9,7 +10,7 @@ const path=require("path");
 const env=require("./config/environment");
 //use for session cookie 
 const session=require("express-session");
-
+require('./config/view-helpers')(app);
 //for authentication
 const passport=require("passport");
 const passportLocal=require("./config/passport-local-strategy");
