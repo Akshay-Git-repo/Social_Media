@@ -1,17 +1,8 @@
 const nodemailer=require('nodemailer');
 const path=require('path');
 const ejs=require('ejs');
-
-let transporter = nodemailer.createTransport({
-    service:'gmail',
-    host: "smtp.gmail.com",
-    port: 587, //port for TLS ,foer more details check gmail smtp settings
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: 'akshaykharade95@gmail.com', // generated ethereal user
-      pass: 'kharade6041995@', // generated ethereal password
-    }
-  ,});
+const env=require("./environment");
+let transporter = nodemailer.createTransport(env.smtp);
 
 
 

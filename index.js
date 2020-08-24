@@ -1,10 +1,12 @@
 const express=require("express");
 const app=express();
 const port=8000;
+const logger=require("morgan");
 const layouts=require("express-ejs-layouts");
 const db=require("./config/mongoose");
 const cookieParser=require("cookie-parser");
-
+const path=require("path");
+const env=require("./config/environment");
 //use for session cookie 
 const session=require("express-session");
 
@@ -36,17 +38,20 @@ chatServer.listen(5000);
 console.log("chat server is listening on port 5000");
 
 
+//static file location
+app.use(express.static(env.asset_path));
+if(env.name=='development')
+{
 app.use(sassMiddleware({
-    src:'./assets/scss',
-    dest:"./assets/css",
+    src:path.join(__dirname,env.asset_path,'/scss'),
+    dest:path.join(__dirname,env.asset_path,'/css'),
     debug:true,
     outputStyle:"extended",
     prefix:"/css"
 
 }));
-
+}
 //middleware
-
 app.use(express.urlencoded());
 app.use(cookieParser());
 
@@ -60,8 +65,6 @@ app.use(cookieParser());
 
 
 
-//static file location
-app.use(express.static("./assets"));
 
 
 //add static files to layout.ejs
@@ -80,13 +83,14 @@ app.set('views','./views');
 
 app.use('/uploads/',express.static(__dirname+'/uploads'));
 
+app.use(logger(env.morgan.mode,env.morgan.options));
 //middleware for session
 
 app.use(session(
     {
     name:'codeial',
     //change the secret before deployment on production 
-    secret:'balhsomething',
+    secret:env.session_cookie_key,
     saveUninitialized:false,
     resave:false,
     cookie:

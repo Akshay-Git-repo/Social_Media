@@ -1,0 +1,17 @@
+#layout-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 0px;
+  background-color: #4682B4;
+  font-family: unset; }
+  #layout-header #header-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around; }
+  #layout-header li {
+    margin-left: 5px;
+    font-weight: bold;
+    margin-right: 2px; }
+  #layout-header a {
+    color: white; }

@@ -1,6 +1,6 @@
 const User=require("../../../models/user");
 const jwt=require('jsonwebtoken');
-
+const env=require("../../../config/environment");
 
 //after api hits the createsession it will have the requested data i.e email and password and here we are create the json web token
 module.exports.createSession=async function(req,res)
@@ -21,7 +21,7 @@ module.exports.createSession=async function(req,res)
                     data:
                     {
                        
-                        token:jwt.sign(user.toJSON(),'codeial',{expiresIn:'100000'}) //create the token ,token contains header,payload(it having all information) and signature
+                        token:jwt.sign(user.toJSON(),env.jwt_secret_or_key,{expiresIn:'100000'}) //create the token ,token contains header,payload(it having all information) and signature
                         //here codeial key is use to encrypt the data
                     }
                 });

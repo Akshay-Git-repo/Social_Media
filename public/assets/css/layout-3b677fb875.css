@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  /* text-align: center; */ }
+  body #layout-main {
+    height: 75%; }
+  body #sign-in-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; }
+
+#sign-in-right-container {
+  margin-left: 20vw; }
+
+#sign-in-background {
+  height: 75%;
+  background: url("../images/connecting-people-business-network.png") no-repeat;
+  background-size: contain;
+  border-radius: 2% 2% 5% 2%;
+  opacity: 0.9; }

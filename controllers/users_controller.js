@@ -1,4 +1,5 @@
 const User=require("../models/user");
+const Post=require("../models/post");
 const Friendships=require("../models/friendship");
 const fs=require("fs");
 const path=require('path');
@@ -19,6 +20,16 @@ module.exports.profile=async function(req,res)
     //let user_friend_or_not=await User.findById({_id:req.params.from_id}).populate({path:'friendships',match:{friendships:req.params.id}});
     let friends=await Friendships.find({from_user:req.params.from_id});
 
+    let posts=await Post.find({})
+        .sort("-createdAt")
+        .populate("user")
+        .populate({path:'comments',
+         populate:{path:'user'},
+        populate:{
+            path:'likes'
+        }
+        }).populate('likes');
+
   if(user_friend_or_not!="")
   {
       status=true;
@@ -31,8 +42,8 @@ module.exports.profile=async function(req,res)
             title:"User Page",
             profile_user:user,
             friends:friends,
-            status:status
-            
+            status:status,
+            Posts:posts
         });
    
    
