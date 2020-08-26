@@ -53,7 +53,7 @@ app.use(sassMiddleware({
 }));
 }
 //middleware
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 
 
