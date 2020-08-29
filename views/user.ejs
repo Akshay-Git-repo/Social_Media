@@ -27,9 +27,18 @@
       <a class="btn btn-danger" href="/users/removefriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); removeFriend(this.id)" style="margin-left: 10vw;">
         Remove Friend
         </a>
-    
+        <%}else if(pending_user.pendingRequest!=""){
+          for(u of pending_user.pendingRequest){
+            if(u._id==profile_user._id){
+          %>
+          <a class="btn btn-primary" href="#"  style="margin-left: 10vw;">
+           Request Pending
+            </a>
+            <%}%>
 
-    <%}else{%>
+    <%}   
+  }else{%>
+    
       <a class="btn btn-primary" href="/users/addfriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); addFriend(this.id)" style="margin-left: 10vw;">
         Add Friend
         </a>
@@ -51,7 +60,7 @@
  <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
   <%= post.createdAt %>
 </small>
- <h2>-------------------------------------------------------------------</h2>
+ <h2>----------------------------------------------------</h2>
 <%}%>
 <%}%>
 </div>
@@ -93,11 +102,11 @@ $("#imgInp").change(function() {
             })
             .done(function(data) {
                
-               $(`#${clicked}`).html(`Remove Friend`);
+               $(`#${clicked}`).html(`Request Pending`);
 
-               $(`#${clicked}`).attr('href',"/users/removefriend/<%= profile_user.id %>/<%=user.id%>");
-               $(`#${clicked}`).attr('onclick',"event.preventDefault(); removeFriend(this.id)");
-               $(`#${clicked}`).addClass("btn btn-danger");
+              //  $(`#${clicked}`).attr('href',"/users/removefriend/<%= profile_user.id %>/<%=user.id%>");
+              //  $(`#${clicked}`).attr('onclick',"event.preventDefault(); removeFriend(this.id)");
+               $(`#${clicked}`).addClass("btn btn-primary");
 
               console.log("success")
 

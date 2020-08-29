@@ -9,7 +9,7 @@ class ChatEngine{
         this.toUser=toUser;
         this.friends=$("#friends-list a");
         //io came from socket io cdn which is present in home.ejs
-        this.socket=io.connect('http://localhost:8000/');
+        this.socket=io.connect('http://localhost:5000/');
 
 
         if(this.userEmail)

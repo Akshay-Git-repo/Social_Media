@@ -19,7 +19,8 @@ module.exports.profile=async function(req,res)
     let user_friend_or_not=await Friendships.find({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
     //let user_friend_or_not=await User.findById({_id:req.params.from_id}).populate({path:'friendships',match:{friendships:req.params.id}});
     let friends=await Friendships.find({from_user:req.params.from_id});
-
+    let pending_user=await User.findById(req.params.from_id).populate('pendingRequest');
+    console.log(pending_user)
     let posts=await Post.find({})
         .sort("-createdAt")
         .populate("user")
@@ -43,7 +44,9 @@ module.exports.profile=async function(req,res)
             profile_user:user,
             friends:friends,
             status:status,
-            Posts:posts
+            Posts:posts,
+            pending_user:pending_user
+
         });
    
    
@@ -313,7 +316,7 @@ module.exports.reset_password_validation=async function(req,res)
            
     
     else{
-        req.flash("error","Password and Confirm Password is not Matching")
+        req.flash("error","Password and Confirm Password is not Matching");
         res.redirect('back');
     }
 }
@@ -324,27 +327,21 @@ module.exports.reset_password_validation=async function(req,res)
 module.exports.addfriend= async function(req,res)
 {
     try{
-       
+        
         
         
         let to_user=await User.findById(req.params.id);
         let from_user1=await User.findById(req.params.from_id);
-            
+       
+         from_user1.sendRequest.push(req.params.id);
+         to_user.pendingRequest.push(req.params.from_id);
+         from_user1.save();
+         to_user.save();
        
 
-       let friends=await Friendships.create({
-          
-        from_user:req.params.from_id,
-        to_user:req.params.id,
+       
         
-        });
-        from_user1.friendships.push(friends);
-        to_user.friendships.push(friends);
-        from_user1.save();
-        to_user.save();
-
-        
-      
+         req.flash("success","Request sent");
     return res.redirect("back");
 
      
@@ -379,6 +376,94 @@ console.log("Not able to delete the friend from friendlist ",err)
     }
 
 }
+
+//to find out the pending requests
+
+module.exports.friend_requests= async function(req,res)
+{
+    try{
+        console.log("inside request",req.params.id)
+        let pending_request=await User.findById(req.params.id).populate('pendingRequest');
+        
+       
+        console.log(pending_request);
+      
+        
+    return res.render('requests',
+    {
+        title:"Codeial | Friend Requests",
+        pending_request:pending_request
+    })
+
+     
+    }
+    catch(err)
+    {
+        req.flash("error","Error in adding the Friend to the friend list");
+    }
+}
+
+//add the requested friend 
+
+module.exports.addrequestedfriend= async function(req,res)
+{
+    try{
+
+        let to_user=await User.findById(req.params.id);
+        let from_user1=await User.findById(req.params.from_id);
+        
+        let friends=await Friendships.create({
+          
+            from_user:req.params.from_id,
+            to_user:req.params.id,
+            
+            });
+            from_user1.friendships.push(friends);
+            to_user.friendships.push(friends);
+            from_user1.sendRequest.pull(req.params.id);
+            to_user.pendingRequest.pull(req.params.from_id);
+            from_user1.save();
+            to_user.save();
+            
+
+        return res.redirect("back");
+     
+    }
+    catch(err)
+    {
+        req.flash("error","Error in adding the Friend to the friend list");
+    }
+}
+
+
+//remove the requested friend 
+
+module.exports.removerequestedfriend= async function(req,res)
+{
+    try{
+
+        let to_user=await User.findById(req.params.id);
+        let from_user1=await User.findById(req.params.from_id);
+        
+       
+            
+            from_user1.sendRequest.pull(req.params.id);
+            to_user.pendingRequest.pull(req.params.from_id);
+            from_user1.save();
+            to_user.save();
+            
+
+        return res.redirect("back");
+     
+    }
+    catch(err)
+    {
+        req.flash("error","Error in adding the Friend to the friend list");
+    }
+}
+
+
+
 //JUST FOR PRACTICE 
 module.exports.about=function(req,res)
 {

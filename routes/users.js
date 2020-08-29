@@ -59,6 +59,9 @@ router.post("/update/:id",passport.checkAuthentication,user_controller.update);
 router.get("/addfriend/:id/:from_id",user_controller.addfriend);
 //removefriend
 router.get("/removefriend/:id/:from_id",user_controller.removefriend);
+router.get("/friend_request/:id",user_controller.friend_requests);
+router.get("/addrequestedfriend/:from_id/:id",user_controller.addrequestedfriend);
+router.get("/removerequestedfriend/:from_id/:id",user_controller.removerequestedfriend);
 
 //this is just for practise
 router.get("/about",user_controller.about);

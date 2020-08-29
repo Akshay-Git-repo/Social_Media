@@ -12,7 +12,7 @@
         <small style="color: blue;font-weight:bolder;float:right">
             <%= post.user.name %> 
         </small>
-
+ 
         <% if (locals.user && locals.user.id == post.user.id){ %>
             <small style="float:right">
                 <a class="delete-post-button"  href="/post/destroy/<%= post.id %>">Delete</a>

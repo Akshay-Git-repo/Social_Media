@@ -31,10 +31,25 @@ const userSchema=new mongoose.Schema
 
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:'Friendship'
+            ref:'User'
 
         }
+    ],
+
+    pendingRequest:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+        }
+    ],
+
+    sendRequest:[
+        {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Friendship'
+        }
     ]
+
 
 
 },

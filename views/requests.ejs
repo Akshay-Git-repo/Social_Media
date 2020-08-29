@@ -1,0 +1,73 @@
+<% if(locals.user.id == pending_request._id){ %>
+    <h2>Friend Requests <%=pending_request.pendingRequest.length%></h2>
+    <% for(u of pending_request.pendingRequest){%>
+        <p style="margin-left: 2vw;">
+            <!-- <a href="/users/profile/<%= u.id %>/<%=locals.user._id%>"><%= u.name %></a> -->
+            <a style="font-weight: bold;" href="#"><%= u.name %></a><br><br>
+            <a class="btn btn-primary" href="/users/addrequestedfriend/<%=u._id%>/<%=locals.user.id%>" id="toggle-friends-add-button-<%= u.id %>  onclick="event.preventDefault();addrequestedFriend(this.id)">
+                Confirm
+                </a>
+                <a class="btn btn-danger" href="/users/removerequestedfriend/<%=u._id%>/<%=locals.user.id%>"  id="toggle-friends-add-button-<%= u.id %>  onclick="event.preventDefault();removerequestedFriend(this.id)">
+                    Delete
+                    </a>
+        </p>
+    <% } %>
+
+
+    <%}%>
+
+
+
+
+    <script>
+        function addrequestedFriend(clicked)
+      {
+      
+        console.log($(`#${clicked}`));
+      
+                    // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+                  $.ajax({
+                      type: 'GET',
+                      url: $(`#${clicked}`).attr('href'),
+                      
+                  })
+                  .done(function(data) {
+                     
+                     $(`#${clicked}`).remove();
+      
+                   
+      
+                  })
+                  .fail(function(errData) {
+                      console.log('error in completing the request',errData);
+                  });
+                  
+      
+            }
+      
+
+            function removerequestedFriend(clicked)
+      {
+      
+        console.log($(`#${clicked}`));
+      
+                    // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+                  $.ajax({
+                      type: 'GET',
+                      url: $(`#${clicked}`).attr('href'),
+                      
+                  })
+                  .done(function(data) {
+                     
+                     $(`#${clicked}`).remove();
+      
+                   
+      
+                  })
+                  .fail(function(errData) {
+                      console.log('error in completing the request',errData);
+                  });
+                  
+      
+            }
+</script>      
