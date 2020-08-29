@@ -1,13 +1,15 @@
-<% if(locals.user.id == pending_request._id){ %>
-    <h2>Friend Requests <%=pending_request.pendingRequest.length%></h2>
+'<% if(locals.user.id == pending_request._id){ %>
+    <h2 id="request-count" data-count="<%=pending_request.pendingRequest.length%>">Friend Requests <%=pending_request.pendingRequest.length%></h2>
     <% for(u of pending_request.pendingRequest){%>
-        <p style="margin-left: 2vw;">
+        <p id="pending-users-<%=u.id%>" style="margin-left: 2vw;">
             <!-- <a href="/users/profile/<%= u.id %>/<%=locals.user._id%>"><%= u.name %></a> -->
             <a style="font-weight: bold;" href="#"><%= u.name %></a><br><br>
-            <a class="btn btn-primary" href="/users/addrequestedfriend/<%=u._id%>/<%=locals.user.id%>" id="toggle-friends-add-button-<%= u.id %>  onclick="event.preventDefault();addrequestedFriend(this.id)">
+            <a class="btn btn-primary" href="/users/addrequestedfriend/<%=u._id%>/<%=locals.user.id%>" id="toggle-friends-add-button-<%= u.id %>"  
+                onclick="event.preventDefault();addrequestedFriend(this.id)">
                 Confirm
                 </a>
-                <a class="btn btn-danger" href="/users/removerequestedfriend/<%=u._id%>/<%=locals.user.id%>"  id="toggle-friends-add-button-<%= u.id %>  onclick="event.preventDefault();removerequestedFriend(this.id)">
+                <a class="btn btn-danger" href="/users/removerequestedfriend/<%=u._id%>/<%=locals.user.id%>"  id="toggle-friends-delete-button-<%= u.id %>"  
+                    onclick="event.preventDefault();removerequestedFriend(this.id)">
                     Delete
                     </a>
         </p>
@@ -22,9 +24,8 @@
     <script>
         function addrequestedFriend(clicked)
       {
-      
-        console.log($(`#${clicked}`));
-      
+     
+      let id=(/(?<=([^-]*-){4}).*/.exec(clicked)[0]);
                     // this is a new way of writing ajax which you might've studied, it looks like the same as promises
                   $.ajax({
                       type: 'GET',
@@ -33,10 +34,14 @@
                   })
                   .done(function(data) {
                      
-                     $(`#${clicked}`).remove();
-      
-                   
-      
+                     // $(`#${clicked}`).remove();
+                    $(`#pending-users-${id}`).remove();
+                   let request_count=parseInt($('#request-count').attr('data-count'))
+                    request_count-=1;
+                    $('#request-count').attr('data-count', request_count);
+                    $('#request-count').html(`Friend Requests ${request_count}`);
+                    $('#request-count-header').html(`${request_count}`);
+
                   })
                   .fail(function(errData) {
                       console.log('error in completing the request',errData);
@@ -49,8 +54,7 @@
             function removerequestedFriend(clicked)
       {
       
-        console.log($(`#${clicked}`));
-      
+        let id=(/(?<=([^-]*-){4}).*/.exec(clicked)[0]);
                     // this is a new way of writing ajax which you might've studied, it looks like the same as promises
                   $.ajax({
                       type: 'GET',
@@ -59,9 +63,13 @@
                   })
                   .done(function(data) {
                      
-                     $(`#${clicked}`).remove();
-      
-                   
+                   // $(`#${clicked}`).remove();
+                   $(`#pending-users-${id}`).remove();
+                   let request_count=parseInt($('#request-count').attr('data-count'))
+                    request_count-=1;
+                    $('#request-count').attr('data-count', request_count);
+                    $('#request-count').html(`Friend Requests ${request_count}`);
+                    $('#request-count-header').html(`${request_count}`);
       
                   })
                   .fail(function(errData) {

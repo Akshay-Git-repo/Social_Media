@@ -11,7 +11,9 @@
 
             <li style="margin-right:10px;"> 
             <a href="/users/friend_request/<%=locals.user.id%>"><i class="fas fa-user-friends"></i></a>
-            <span class="badge badge-light"><%=locals.user.pendingRequest.length%></span>
+            <%if(locals.user.pendingRequest.length>0){%>
+            <span class="badge badge-light" id="request-count-header"><%=locals.user.pendingRequest.length%></span>
+            <%}%>
             </li>   
         <li> 
         <a href="/users/profile"><%=user.name%></a>
