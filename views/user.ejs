@@ -45,24 +45,45 @@
     <%}%>
 <%} %>
 
+<% if(user.id == profile_user.id){ %>
+  <h3>Your Posts</h3>
+  <div style="width: 50vw;">
+    <% for(post of Posts){ %>
+          <% if (locals.user && locals.user.id == post.user.id){ %>
+            <%if(post.avatar){%>
+              <img src="<%= post.avatar%>"  width="80%" height="300" id="profile_photo"><br><br>
+              <%}%>
+              
+              <%= post.content %>
+              <br>
+            <br>
+            <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
+              <%= post.createdAt %>
+            </small>
+            <h2>----------------------------------------------------</h2>
+          <%}%>
+    <%}%>
+<%}else{%>
+  <div style="width: 50vw;margin-top: 20px;">
+    <h3><%=profile_user.name%> Posts</h3>
+  <% for(post of Posts){ %>
+    <% if (profile_user.id == post.user.id){ %>
+      <%if(post.avatar){%>
+        <img src="<%= post.avatar%>"  width="80%" height="300" id="profile_photo"><br><br>
+        <%}%>
+        
+        <%= post.content %>
+        <br>
+      <br>
+      <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
+        <%= post.createdAt %>
+      </small>
+      <h2>----------------------------------------------------</h2>
+    <%}%>
+<%}%>
 
-<h3>Your Posts</h3>
-<div style="width: 50vw;">
-<% for(post of Posts){ %>
-<% if (locals.user && locals.user.id == post.user.id){ %>
-<%if(post.avatar){%>
-  <img src="<%= post.avatar%>"  width="80%" height="300" id="profile_photo"><br><br>
-  <%}%>
-  
-  <%= post.content %>
-  <br>
- <br>
- <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
-  <%= post.createdAt %>
-</small>
- <h2>----------------------------------------------------</h2>
-<%}%>
-<%}%>
+    <%}%>
+  </div>
 </div>
 <script>
 
