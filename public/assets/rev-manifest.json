@@ -5,9 +5,12 @@
   "css/home.css": "css/home-9c5753d93a.css",
   "css/layout.css": "css/layout-3b677fb875.css",
   "css/user.css": "css/user-667228799a.css",
-  "js/chat_engine.js": "js/chat_engine-e4772a9631.js",
+  "js/chat_engine.js": "js/chat_engine-8aa1cc5983.js",
   "js/home_post_comments.js": "js/home_post_comments-63eb60cb1d.js",
   "js/home_posts.js": "js/home_posts-5431cd9a8e.js",
   "js/toggle_add_remove_friend.js": "js/toggle_add_remove_friend-e12e732976.js",
-  "js/toggle_likes.js": "js/toggle_likes-a4b507a8af.js"
+  "js/toggle_comment_like.js": "js/toggle_comment_like-cce9008af7.js",
+  "js/toggle_likes.js": "js/toggle_likes-14ddfa3b8c.js",
+  "js/toggle_loves.js": "js/toggle_loves-91e85503f6.js",
+  "js/toggle_wow.js": "js/toggle_wow-b6139fe2b5.js"
 }

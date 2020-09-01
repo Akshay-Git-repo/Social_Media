@@ -1,12 +1,12 @@
 // CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
-class ToggleLike{
+class ToggleLove{
     constructor(toggleElement){
         this.toggler = toggleElement;
-        this.toggleLike();
+        this.toggleLove();
     }
 
 
-    toggleLike(){
+    toggleLove(){
         $(this.toggler).click(function(e){
             e.preventDefault();
             let self = this;
@@ -17,10 +17,11 @@ class ToggleLike{
                 url: $(self).attr('href'),
             })
             .done(function(data) {
-                let likesCount = parseInt($(self).attr('data-likes'));
+                let likesCount = parseInt($(self).attr('data-love'));
                 console.log(likesCount);
+                console.log(data);
                 if (data.data.deleted == true){
-                   if(data.data.model_diff==false){
+                    if(data.data.model_diff==false){
                     likesCount -= 1;
                     }
                     if(data.data.model_diff==true)
@@ -29,32 +30,34 @@ class ToggleLike{
                         let query="post-"+data.data.model+"-"+data.data.post_id;
                         let count;
                         console.log("query is",query)
-                       
-                           
+                        if(data.data.model=="like")
+                        {
+                            count = parseInt($(`#${query}`).attr('data-likes'));
+                            if(count!=0){
+                            count -=1;
+                            }
+                            $(`#${query}`).html(`${count} Likes`)
+                        }
+                        else{
                         count = parseInt($(`#${query}`).attr('data-'+data.data.model));
                         if(count!=0)
                         {
                         count -=1;
                         }
-			if(data.data.model=="wow"){
                         $(`#${query}`).html(`<i class="fas fa-surprise" style="color: yellowgreen;">&nbsp${count} Wow</i>`);
                         }
-			if(data.data.model=="love")
-			{
-			$(`#${query}`).html(`<i class="fas fa-heart" style="color:red;">&nbsp${count} Love</i>`);
-			}
                        
                     }
                     
                 }else{ 
                     likesCount += 1;
+                    
                 }
 
 
-                $(self).attr('data-likes', likesCount);
-                $(self).html(`${likesCount} Likes`);
-
-
+                $(self).attr('data-love', likesCount);
+                $(self).html(`<i class="fas fa-heart" style="color: red;">&nbsp${likesCount} Love</i>`);
+                  
             })
             .fail(function(errData) {
                 console.log('error in completing the request');

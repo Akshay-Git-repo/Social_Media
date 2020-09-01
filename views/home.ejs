@@ -60,10 +60,25 @@
 <script src="<%=assetPath('js/home_post_comments.js')%>"></script>
 <script src="<%=assetPath('js/home_posts.js')%>"></script>
 <script src="<%=assetPath('js/toggle_likes.js')%>"></script>
+<script src="<%=assetPath('js/toggle_loves.js')%>"></script>
+<script src="<%=assetPath('js/toggle_wow.js')%>"></script>
+<script src="<%=assetPath('js/toggle_comment_like.js')%>"></script>
 <script>
     $('.toggle-like-button').each(function(){
         let self = this;
         let toggleLike = new ToggleLike(self);
+    });
+    $('.toggle-love-button').each(function(){
+        let self = this;
+        let toggleLove = new ToggleLove(self);
+    });
+    $('.toggle-wow-button').each(function(){
+        let self = this;
+        let toggleWow = new ToggleWow(self);
+    });
+    $('.toggle-comment-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleCommentLike(self);
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>

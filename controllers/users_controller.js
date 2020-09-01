@@ -19,8 +19,23 @@ module.exports.profile=async function(req,res)
     let user_friend_or_not=await Friendships.find({$or:[{to_user:req.params.id,from_user:req.params.from_id},{from_user:req.params.id,to_user:req.params.from_id}]});
     //let user_friend_or_not=await User.findById({_id:req.params.from_id}).populate({path:'friendships',match:{friendships:req.params.id}});
     let friends=await Friendships.find({from_user:req.params.from_id});
-    let pending_user=await User.findById(req.params.from_id).populate('pendingRequest');
+    let pending_user=await User.findById(req.params.from_id).populate('sendRequest');
+    let send_user=await User.findById(req.params.from_id).populate('pendingRequest');
     console.log(pending_user)
+    let pending=false;
+    for(u of pending_user.sendRequest){
+        if(u._id==req.params.id){
+            pending=true;
+        }
+    }
+let already_requested=false;
+for(u of send_user.pendingRequest){
+    if(u._id==req.params.id){
+        already_requested=true;
+    }
+}
+
+console.log("i am pending",pending)
     let posts=await Post.find({})
         .sort("-createdAt")
         .populate("user")
@@ -45,7 +60,9 @@ module.exports.profile=async function(req,res)
             friends:friends,
             status:status,
             Posts:posts,
-            pending_user:pending_user
+            pending_user:pending_user,
+            pending:pending,
+            already_requested:already_requested
 
         });
    

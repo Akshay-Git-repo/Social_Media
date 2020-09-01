@@ -1,5 +1,5 @@
 // CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
-class ToggleLike{
+class ToggleCommentLike{
     constructor(toggleElement){
         this.toggler = toggleElement;
         this.toggleLike();
@@ -10,7 +10,6 @@ class ToggleLike{
         $(this.toggler).click(function(e){
             e.preventDefault();
             let self = this;
-
             // this is a new way of writing ajax which you might've studied, it looks like the same as promises
             $.ajax({
                 type: 'GET',
@@ -20,31 +19,7 @@ class ToggleLike{
                 let likesCount = parseInt($(self).attr('data-likes'));
                 console.log(likesCount);
                 if (data.data.deleted == true){
-                   if(data.data.model_diff==false){
                     likesCount -= 1;
-                    }
-                    if(data.data.model_diff==true)
-                    {
-                        likesCount += 1;
-                        let query="post-"+data.data.model+"-"+data.data.post_id;
-                        let count;
-                        console.log("query is",query)
-                       
-                           
-                        count = parseInt($(`#${query}`).attr('data-'+data.data.model));
-                        if(count!=0)
-                        {
-                        count -=1;
-                        }
-			if(data.data.model=="wow"){
-                        $(`#${query}`).html(`<i class="fas fa-surprise" style="color: yellowgreen;">&nbsp${count} Wow</i>`);
-                        }
-			if(data.data.model=="love")
-			{
-			$(`#${query}`).html(`<i class="fas fa-heart" style="color:red;">&nbsp${count} Love</i>`);
-			}
-                       
-                    }
                     
                 }else{ 
                     likesCount += 1;
@@ -53,7 +28,6 @@ class ToggleLike{
 
                 $(self).attr('data-likes', likesCount);
                 $(self).html(`${likesCount} Likes`);
-
 
             })
             .fail(function(errData) {

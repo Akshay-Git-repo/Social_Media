@@ -16,7 +16,7 @@ const likeSchema=new mongoose.Schema({
     {
         type:String,
         required:true,
-        enum:['Post','Comment']
+        enum:['Post-Wow','Post-Love','Comment','Post-Like']
     }
 
 },

@@ -7,7 +7,7 @@
             <%= comment.user.name %>
             <!-- <a id='<%= comment._id %>' class="like-comment-button" href="/likes/toggle/?id=<%=comment._id %>&type=Comment" <i class="fa fa-thumbs-o-up" aria-hidden="true" style="color: blue;"></i> <%=comment.likes.length%> Likes</a> -->
             <% if (locals.user){ %>
-                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                <a class="toggle-comment-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
                         <%= comment.likes.length %> Likes
                 </a>
             <% }else{ %>

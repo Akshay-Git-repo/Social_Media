@@ -36,7 +36,19 @@ const postSchema=new mongoose.Schema
             type:mongoose.Schema.Types.ObjectId,
            
             ref:"Like"
-        }]
+        }],
+        love:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+               
+                ref:"Like"
+            }],
+            wow:[
+                {
+                    type:mongoose.Schema.Types.ObjectId,
+                   
+                    ref:"Like"
+                }],
  },  
     {
         timestamps:true

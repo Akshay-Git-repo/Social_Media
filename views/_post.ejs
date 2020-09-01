@@ -24,13 +24,21 @@
             </small>
           <!-- <a id="<%= post.id %>"  class="like-post-button" href="/likes/toggle/?id=<%=post.id %>&type=Post" <i class="fa fa-thumbs-o-up" aria-hidden="true" style="color: blue;"></i> <%=post.likes.length%> Likes</a> -->
           <% if (locals.user){ %>
-            <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+            <a id="post-like-<%=post._id%>"  class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post-Like">
                     <%= post.likes.length %> Likes
             </a>
+            <a id="post-wow-<%=post._id%>" class="toggle-wow-button" data-wow="<%= post.wow.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post-Wow">
+                <i class="fas fa-surprise" style="color: yellowgreen;"> <%= post.wow.length %> Wow</i>
+            </a>
+            <a id="post-love-<%=post._id%>" class="toggle-love-button" data-love="<%= post.love.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post-Love">
+                <i class="fas fa-heart" style="color: red;">  <%= post.love.length %> Love</i> 
+            </a>
+            
+            
         <% }else{ %>
             <%= post.likes.length %> Likes
         <% } %>
-
+  
     </p> 
     <div class="post-comments">
         <% if (locals.user){ %>
