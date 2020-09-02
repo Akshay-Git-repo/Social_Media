@@ -6,9 +6,9 @@
             <h4>Posts</h4>
             <% if(locals.user){ %>
             <form action="/post/create" id="new-post-form"  enctype="multipart/form-data" method="POST">
-                <textarea name="content" cols="30" rows="3" placeholder="Write to your Timeline..." required></textarea>
-                <input type="file" name="avatar" placeholder="Posted Picture"><br>
-                <input type="submit" value="Post">
+                <textarea name="content" cols="30" rows="3" placeholder="Write to your Timeline..." required style="border-radius: 12px 12px 12px 12px;"></textarea><br><br>
+                <input type="file" name="avatar" placeholder="Posted Picture" style="background:whitesmoke; border:1px solid black;color:black;border-radius: 12px 12px 12px 12px;"><br>
+                <input class="btn btn-info" type="submit" value="Post">
             </form>
 
            

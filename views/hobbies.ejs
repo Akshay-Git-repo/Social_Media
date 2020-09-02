@@ -1,0 +1,88 @@
+
+<div style="margin-left: 2vw;margin-top: 10px;" id="hobbies_conatiner">
+<% let total_hobbies=['Reading','Football','Baseball','Riding','Gym','Skating','Table_Tennis','Swimming'];%>
+
+    <h2 style="font-weight: bolder;">Your Hobbies</h2>
+<form action="/users/add-hobby/<%=user.id%>"  method="get" id="my_form">
+    <% for(hobby of hobbies){%>
+        <%
+        let str;
+        if(hobby=='Reading'){str='fas fa-book-reader';}
+        if(hobby=='Football'){str='fas fa-futbol';}
+        if(hobby=='Baseball'){str='fas fa-baseball-ball';}
+        if(hobby=='Riding'){str='fas fa-biking';}
+        if(hobby=='Gym'){str='fas fa-dumbbell';}
+        if(hobby=='Table_Tennis'){str='fas fa-table-tennis';}
+        if(hobby=='Skating'){str='fas fa-skating';}
+        if(hobby=='Swimming'){str='fas fa-swimmer';}
+        %>
+        <i class="<%=str%>"></i>
+        <input hidden; style="background-color: teal; border-radius: 12px 12px 12px 12px; color: white;"  &nbsp value="<%=hobby%>">
+        <br><br>
+           
+    
+    <%}%>
+
+    <br><br>
+    <small>Hobbies are public</small><br><br>
+    
+    
+    <%let diff=total_hobbies.filter(x=>!hobbies.includes(x))%>
+    
+    <%if(diff.length>0){%>
+        
+        <i>What do you love to do ? Choose from the popular hobbies below.</i><br><br>
+        <b>Add Hobbies</b><br><br>
+        <%}%>
+    <% let j=15;for(hobby of diff){%>
+        <%
+        let str;
+        if(hobby=='Reading'){str='fas fa-book-reader';}
+        if(hobby=='Football'){str='fas fa-futbol';}
+        if(hobby=='Baseball'){str='fas fa-baseball-ball';}
+        if(hobby=='Riding'){str='fas fa-biking';}
+        if(hobby=='Gym'){str='fas fa-dumbbell';}
+        if(hobby=='Table_Tennis'){str='fas fa-table-tennis';}
+        if(hobby=='Skating'){str='fas fa-skating';}
+        if(hobby=='Swimming'){str='fas fa-swimmer';}
+        %>
+        <i class="<%=str%>"></i>
+        <input type="checkbox" name="hobby<%=j%>" value="<%=hobby%>" > &nbsp <%=hobby%></a><br><br>
+        
+           <% j++;%>
+    
+    <%}%>
+
+    <p><input style="background-color: blue; color:white" type="submit" value="Save" id="btnSubmit"></p>
+    
+    </form>
+</div>
+    <div id="server-results"><!-- For server results --></div>
+
+
+
+<script>
+
+
+
+
+$("#my_form").submit(function(event){
+	event.preventDefault(); //prevent default action 
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+    }).done(function(response){ //
+        $("header").remove();
+        $("#hobbies_conatiner").remove();
+		$("#server-results").html(response);
+	}) .fail(function(errData) {
+                console.log('error in completing the request',errData);
+            });
+});
+
+</script>

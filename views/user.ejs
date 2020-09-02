@@ -1,28 +1,45 @@
 <link rel="stylesheet" href="<%= assetPath('css/user.css')%>">
+<div style="margin-left:2vw">
 
-<% if(user.id == profile_user.id){ %>
 <h2 id="profile_heading">Profile</h2>
-<img src="<%= user.avatar%>" alt="<%=user.name%>" width="100" height="auto" style="background-color: lightslategray; border-radius: 50%;" id="profile_photo"><br><br>
-<%} %>
-
+<img src="<%= profile_user.avatar%>" alt="<%=profile_user.name%>" width="11.8%" height="auto" style="background-color: lightslategray; border-radius: 50%;" id="profile_photo"><br></br>
 <% if(user.id == profile_user.id){ %>
+  <h4 ><b>Basic Info</b></h4>
     <!-- if user matches then show the form -->
     <form action="/users/update/<%= profile_user.id %>" method="POST" enctype="multipart/form-data" >
-        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required><br><br>
-        <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required><br><br>
-        <input id="imgInp" type="file" name="avatar" placeholder="Profile Picture" /><br><br>
-        <input type="submit"  value="Update">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" style="background-color: lightsteelblue;" required><br><br>
+        <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" style="background-color: lightsteelblue;" required><br><br>
+        <input style="background:whitesmoke; border:1px solid black;color:black;border-radius: 12px 12px 12px 12px;" id="imgInp" type="file" name="avatar" placeholder="Profile Picture" /><br><br>
+        <input class="btn btn-info" type="submit"  value="Update">
     </form>
     
-
    
+      <%if(profile_user.hobbies.length>0){%>
+      <h4 ><b>Hobbies</b></h4>
+      <div style="display: flex;flex-direction: row; flex-wrap: wrap;width: 50vw;">
+      <%for(u of profile_user.hobbies){%>
+        <input hidden; style="background-color: lightgoldenrodyellow; border-radius: 12px 12px 12px 12px; color: black; text-align: center;margin-bottom: 10px;margin-right: 10px;"  &nbsp value="<%=u%>">
+        
+        <br>
+      <%}%>
+      
+      <%}%>
+      
+      </div>
+      <br>
+      <% if(user.id == profile_user.id){ %>
+        <a class="btn btn-primary" style="margin-left: 2vw;" href="/users/update_hobbies/<%= profile_user.id %>">Edit Your Hobbies</a><br><br>
+        <%}%>
+      <br><br>
+      
+
 
 
 
 <%}else{%>    
     <!-- else show only the profile info -->
-    <p><%= profile_user.name %></p>
-    <p><%= profile_user.email %></p>
+    <p><b>Name:</b><%= profile_user.name %></p>
+    <p><b>Email:</b><%= profile_user.email %></p>
     <% if(status){%>
       <a class="btn btn-danger" href="/users/removefriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); removeFriend(this.id)" style="margin-left: 10vw;">
         Remove Friend
@@ -61,12 +78,13 @@
             <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
               <%= post.createdAt %>
             </small>
+            <b id="total-likes-<%=post._id%>" data-total-likes="<%= post.likes.length + post.wow.length + post.love.length %>" style="color: darkblue;"><%= post.likes.length + post.wow.length + post.love.length %> Likes </b><br>
             <h2>----------------------------------------------------</h2>
           <%}%>
     <%}%>
 <%}else{%>
   <div style="width: 50vw;margin-top: 20px;">
-    <h3><%=profile_user.name%> Posts</h3>
+    <h3 style="color:maroon; font-weight: bolder;"><%=profile_user.name%> Posts</h3>
   <% for(post of Posts){ %>
     <% if (profile_user.id == post.user.id){ %>
       <%if(post.avatar){%>
@@ -79,12 +97,14 @@
       <small style="padding-left:5vw;float:right;width:30vw"  id="post_created_time">
         <%= post.createdAt %>
       </small>
+      <b id="total-likes-<%=post._id%>" data-total-likes="<%= post.likes.length + post.wow.length + post.love.length %>" style="color: darkblue;"><%= post.likes.length + post.wow.length + post.love.length %> Likes </b><br>
       <h2>----------------------------------------------------</h2>
     <%}%>
 <%}%>
 
     <%}%>
   </div>
+</div>
 </div>
 <script>
 

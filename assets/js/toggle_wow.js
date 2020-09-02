@@ -18,14 +18,18 @@ class ToggleWow{
             })
             .done(function(data) {
                 let wowCount = parseInt($(self).attr('data-wow'));
-                console.log(wowCount);
+                let total_likes;
+                let total_like_query="total-likes-"+data.data.post_id;
+                total_likes=parseInt($(`#${total_like_query}`).attr('data-total-likes'));
                 if (data.data.deleted == true){
 			if(data.data.model_diff==false){
                     wowCount -= 1;
+                    total_likes -=1;
                     }
                     if(data.data.model_diff==true)
                     {
                         wowCount += 1;
+                        
                         let query="post-"+data.data.model+"-"+data.data.post_id;
                         let count;
                         console.log("query is",query)
@@ -50,11 +54,12 @@ class ToggleWow{
                                        
                 }else{ 
                     wowCount += 1;
+                    total_likes +=1;
                 }
-
+                
 
                 $(self).attr('data-wow', wowCount);
-                
+                $(`#${total_like_query}`).html(`${total_likes} Likes`)             
                 $(self).html(`<i class="fas fa-surprise" style="color: yellowgreen;">&nbsp${wowCount} Wow</i>`);
 
             })

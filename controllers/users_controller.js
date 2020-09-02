@@ -35,7 +35,6 @@ for(u of send_user.pendingRequest){
     }
 }
 
-console.log("i am pending",pending)
     let posts=await Post.find({})
         .sort("-createdAt")
         .populate("user")
@@ -227,6 +226,43 @@ module.exports.reset_password=function(req,res)
         title:"Codeial | Reset Password"
     })
 }
+
+
+//action for update the users hobbies
+
+module.exports.update_hobbies=async function(req,res)
+{
+    let user=await User.findById(req.params.id);
+    return res.render('hobbies',
+    {
+        title:"Codeial | Hobbies",
+        hobbies:user.hobbies
+    })
+
+}
+
+
+module.exports.add_hobbies= async function(req,res)
+{
+   
+
+console.log("inside the add hobbies")
+   let user=await User.findById(req.params.id);
+  
+
+   for (let hobby of Object.values(req.query)) {
+    
+    user.hobbies.push(hobby);
+        }
+
+
+
+  user.save();
+   res.redirect("back");
+
+}
+
+
 
 //sending the reset password mail to user
 

@@ -18,14 +18,18 @@ class ToggleLike{
             })
             .done(function(data) {
                 let likesCount = parseInt($(self).attr('data-likes'));
-                console.log(likesCount);
+                let total_likes;
+                let total_like_query="total-likes-"+data.data.post_id;
+                total_likes=parseInt($(`#${total_like_query}`).attr('data-total-likes'));
                 if (data.data.deleted == true){
                    if(data.data.model_diff==false){
                     likesCount -= 1;
+                    total_likes -=1;
                     }
                     if(data.data.model_diff==true)
                     {
                         likesCount += 1;
+                        
                         let query="post-"+data.data.model+"-"+data.data.post_id;
                         let count;
                         console.log("query is",query)
@@ -48,10 +52,12 @@ class ToggleLike{
                     
                 }else{ 
                     likesCount += 1;
+                    total_likes +=1;
                 }
 
 
                 $(self).attr('data-likes', likesCount);
+                $(`#${total_like_query}`).html(`${total_likes} Likes`);
                 $(self).html(`${likesCount} Likes`);
 
 

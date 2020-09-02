@@ -54,7 +54,9 @@ router.post("/reset_password_validation/:id",user_controller.reset_password_vali
 
 
 router.post("/update/:id",passport.checkAuthentication,user_controller.update);
+router.get("/update_hobbies/:id",user_controller.update_hobbies);
 
+router.get("/add-hobby/:id",user_controller.add_hobbies);
 
 router.get("/addfriend/:id/:from_id",user_controller.addfriend);
 //removefriend
