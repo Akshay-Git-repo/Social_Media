@@ -65,7 +65,7 @@ gulp.task('js',function(done){
 
         gulp.task('clean:assets',function(done)
         {
-            del.sync("./public/assets");
+            del.sync("./public/");
             done();
         });
 

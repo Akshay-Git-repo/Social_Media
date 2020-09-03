@@ -6,20 +6,24 @@
         
     </div>
     <div style="margin-top: 15px;">
-        <ul id="header-nav" style="list-style-type:none">
+                
+        
+        <ul id="header-nav" style="list-style-type:none;justify-content:flex-end;">
         <%if(locals.user){%> 
-
+            
             <li style="margin-right:10px;"> 
             <a href="/users/friend_request/<%=locals.user.id%>"><i class="fas fa-user-friends"></i></a>
             <%if(locals.user.pendingRequest.length>0){%>
             <span class="badge badge-light" id="request-count-header"><%=locals.user.pendingRequest.length%></span>
             <%}%>
             </li>   
+            <img src="<%= user.avatar%>" alt="<%=user.name%>" width="3%" height="20vh" style="background-color: lightslategray; border-radius: 50%;" ><br></br>
         <li> 
+            
         <a href="/users/profile/<%= user.id %>/<%=locals.user._id%>"><%=user.name%></a>
 
         </li>
-
+        
         <li>
         <a href="/users/sign-out">Sign Out</a>
 

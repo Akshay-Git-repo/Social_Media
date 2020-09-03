@@ -84,7 +84,7 @@
     <% for(post of Posts){ %>
           <% if (locals.user && locals.user.id == post.user.id){ %>
             <%if(post.avatar){%>
-              <img src="<%= post.avatar%>"  width="80%" height="300" id="profile_photo"><br><br>
+              <img src="<%= post.avatar%>"  width="80%" height="300" ><br><br>
               <%}%>
               
               <%= post.content %>
@@ -103,7 +103,7 @@
   <% for(post of Posts){ %>
     <% if (profile_user.id == post.user.id){ %>
       <%if(post.avatar){%>
-        <img src="<%= post.avatar%>"  width="80%" height="300" id="profile_photo"><br><br>
+        <img src="<%= post.avatar%>"  width="80%" height="300"><br><br>
         <%}%>
         
         <%= post.content %>

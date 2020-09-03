@@ -106,7 +106,7 @@ class ChatEngine{
 
               
 
-                newMessage.append(`<span>${data.message}</span>`);
+                newMessage.append(`<span style='border-radius: 12px 12px 12px 12px;'>${data.message}</span>`);
                 newMessage.append(`<br><sub style="font-size:10px">${data.name}</sub>`);
                 
                 newMessage.addClass(messageType);

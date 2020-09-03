@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="<%= assetPath('css/home.css')%>">
-<button text="join room" class="btn btn-primary btn-block" style="background:yellowgreen;"onclick="b()"> Join Room</button>
+<!-- <button text="join room" class="btn btn-primary btn-block" style="background:yellowgreen;"onclick="b()"> Join Room</button> -->
 
 <div id="home-container">
     <section id="feed-posts">
             <h4>Posts</h4>
+            
             <% if(locals.user){ %>
             <form action="/post/create" id="new-post-form"  enctype="multipart/form-data" method="POST">
                 <textarea name="content" cols="30" rows="3" placeholder="Write to your Timeline..." required style="border-radius: 12px 12px 12px 12px;"></textarea><br><br>
