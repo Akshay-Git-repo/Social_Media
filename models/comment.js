@@ -6,7 +6,11 @@ const commentSchema=new mongoose.Schema(
         type:String,
         required:true
     },
-
+    commenteduser:
+    {
+        type:String,
+        required:true
+    },
     //comment belongs to user
 
     user:

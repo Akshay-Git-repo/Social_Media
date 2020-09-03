@@ -249,7 +249,7 @@ module.exports.add_hobbies= async function(req,res)
 console.log("inside the add hobbies")
    let user=await User.findById(req.params.id);
   
-
+    
    for (let hobby of Object.values(req.query)) {
     
     user.hobbies.push(hobby);

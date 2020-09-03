@@ -14,6 +14,7 @@ try{
   let comment= await Comment.create({
            content:req.body.content,
            post:req.body.post,
+           commenteduser:req.user.name,
            user:req.user._id});
 
  
@@ -26,8 +27,8 @@ try{
        post.save();
 
         // Similar for comments to fetch the user's id!
-        comment = await comment.populate('user', 'name email').execPopulate();
-
+       comment = await comment.populate('user', ('name','name')).execPopulate();
+       console.log(comment)
         //now send the mail 
        // commentsmailer.newComment(comment);
 
@@ -44,12 +45,11 @@ try{
       
        if(req.xhr)
        {
-           
+          
 
            return res.status(200).json({
                data:{
                    comment:comment,
-                   
                   
                },
                message:"Comment Created Successfully!",
@@ -59,7 +59,7 @@ try{
        }
       
        req.flash("success","Comment Added Successfully!")
-        res.redirect("/");
+        res.redirect("back");
   }
 }
   catch(err)

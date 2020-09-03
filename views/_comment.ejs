@@ -2,9 +2,10 @@
     <p id="comment-content" style="font-size: small;margin-bottom: 20px;">
        
         <%= comment.content %>
+        
         <br>
         <small style="margin-left: 10vw;">
-            <%= comment.user.name %>
+            <%= comment.commenteduser %>
             <!-- <a id='<%= comment._id %>' class="like-comment-button" href="/likes/toggle/?id=<%=comment._id %>&type=Comment" <i class="fa fa-thumbs-o-up" aria-hidden="true" style="color: blue;"></i> <%=comment.likes.length%> Likes</a> -->
             <% if (locals.user){ %>
                 <a class="toggle-comment-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">

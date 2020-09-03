@@ -40,6 +40,21 @@
     <!-- else show only the profile info -->
     <p><b>Name:</b><%= profile_user.name %></p>
     <p><b>Email:</b><%= profile_user.email %></p>
+    <br>
+    
+    <%if(profile_user.hobbies.length>0){%>
+      <h4 ><b>Hobbies</b></h4>
+      <div style="display: flex;flex-direction: row; flex-wrap: wrap;width: 50vw;">
+      <%for(u of profile_user.hobbies){%>
+        <input hidden; style="background-color: lightgoldenrodyellow; border-radius: 12px 12px 12px 12px; color: black; text-align: center;margin-bottom: 10px;margin-right: 10px;"  &nbsp value="<%=u%>">
+        
+        <br>
+      <%}%>
+      
+      <%}%>
+      
+      </div>
+      <br>
     <% if(status){%>
       <a class="btn btn-danger" href="/users/removefriend/<%= profile_user.id %>/<%=user.id%>" id="toggle-friends-add-button-<%= profile_user.id %>" onclick=" event.preventDefault(); removeFriend(this.id)" style="margin-left: 10vw;">
         Remove Friend
