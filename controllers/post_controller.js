@@ -50,7 +50,7 @@ module.exports.create=async function(req,res)
         if(req.xhr) 
         {
             console.log("insid the xhr request");
-            post = await post.populate('user', 'name').execPopulate();
+            post = await post.populate('user', ('name','avatar')).execPopulate();
             console.log("post data is",post)
             return res.status(200).json({
                 data:{
